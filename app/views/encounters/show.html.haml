@@ -1,0 +1,16 @@
+%p#notice= notice
+
+= link_to 'Edit', edit_encounter_path(@encounter)
+\|
+= link_to 'Back', encounters_path
+
+%p
+  %b Name:
+  = @encounter.name
+%p
+  %b Monsters:
+  - @encounter.monsters.all.uniq.each do |monster|
+    %p= "#{@encounter.monsters.all.count(monster)} #{monster.name}, Level #{monster.level}"
+%p
+  - @encounter.monsters.all.uniq.each do |monster|
+    = image_tag(Monster.image_of(monster))

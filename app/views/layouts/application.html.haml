@@ -1,0 +1,15 @@
+!!! 5
+%html
+  %head
+    %title Dndomator
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    -#- if flash[:notice]
+      -#%div{:class => "alert alert-info"}
+        -#=flash[:notice]
+    -#- if flash[:error]
+      -#%div{:class => "alert alert-error"}
+        -#=flash[:error]
+  = yield

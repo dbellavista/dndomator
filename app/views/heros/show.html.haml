@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @hero.name
+%p
+  %b Player:
+  = @hero.player
+
+= link_to 'Edit', edit_hero_path(@hero)
+\|
+= link_to 'Back', heros_path

@@ -1,0 +1,21 @@
+= form_for @encounter do |f|
+  - if @encounter.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@encounter.errors.count, "error")} prohibited this encounter from being saved:"
+      %ul
+        - @encounter.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  - Monster.find_each do |monster|
+    %p
+      = check_box_tag "incmonster[#{monster.id}]", true, @encounter.monsters.include?(monster)
+      = "#{monster.name} (#{monster.level})"
+      - if @encounter.monsters.count(monster) > 0
+        = text_field_tag "nummonster[#{monster.id}]", @encounter.monsters.count(monster), :size => 3
+      - else
+        = text_field_tag "nummonster[#{monster.id}]", 1, :size => 3
+  .actions
+    = f.submit 'Save'

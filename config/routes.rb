@@ -1,4 +1,15 @@
 Dndomator::Application.routes.draw do
+
+  resources :encounters
+
+  resources :monsters do
+    collection do
+      get 'auto_create'
+    end
+  end
+
+  resources :heros
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
