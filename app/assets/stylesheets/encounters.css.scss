@@ -1,3 +1,27 @@
 // Place all the styles related to the Encounters controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+textarea {
+  vertical-align: top;
+}
+.fixed {
+  position:fixed;
+  left: 20px;
+}
+
+.input-mini[class=input-mini] {
+  width: 30px;
+}
+
+div.current {
+  background-color: #d9edf7;
+}
+
+div.hero {
+  background-color: #fcf8e3;
+}
+
+div.hero.current {
+  background-color: #d9edf7;
+}

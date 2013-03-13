@@ -1,15 +1,27 @@
 !!! 5
 %html
   %head
-    %title Dndomator
+    %title DnD'o'Mator
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
-    -#- if flash[:notice]
-      -#%div{:class => "alert alert-info"}
-        -#=flash[:notice]
-    -#- if flash[:error]
-      -#%div{:class => "alert alert-error"}
-        -#=flash[:error]
-  = yield
+    %div{:class=>"navbar navbar-inverse navbar-fixed-top"}
+      %div.navbar-inner
+        %div.container-fluid
+          = link_to "DnD'o'Mator", root_url, :class=>"brand"
+          %ul.nav
+            %li= link_to "Home", root_url
+            %li= link_to "Encounters", encounters_path
+            %li= link_to "Monsters", monsters_path
+            %li= link_to "Heroes", heros_path
+
+    %div.container-fluid
+      %div.row-fluid
+      - if flash[:notice]
+        %div{:class => "alert alert-info"}
+          =flash[:notice]
+      - if flash[:error]
+        %div{:class => "alert alert-error"}
+          =flash[:error]
+      = yield

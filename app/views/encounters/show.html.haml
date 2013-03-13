@@ -1,16 +1,25 @@
-%p#notice= notice
+%script
+  :plain
+    $(function() { initEncounter("\
+  = "#{encounter_path(:id => @encounter.id, :format => :json)}\\"
+  :plain
+    ", "\
+  = "#{heros_path(:format => :json)}\\"
+  :plain
+    ");
+    });
 
-= link_to 'Edit', edit_encounter_path(@encounter)
-\|
-= link_to 'Back', encounters_path
+%div{:class => "row-fluid"}
+  = link_to 'Edit', edit_encounter_path(@encounter)
+  = link_to 'Back', encounters_path
 
-%p
-  %b Name:
-  = @encounter.name
-%p
-  %b Monsters:
-  - @encounter.monsters.all.uniq.each do |monster|
-    %p= "#{@encounter.monsters.all.count(monster)} #{monster.name}, Level #{monster.level}"
-%p
-  - @encounter.monsters.all.uniq.each do |monster|
-    = image_tag(Monster.image_of(monster))
+  %h2= "#{@encounter.name} encounter"
+  %div#encounter_commands{:class => "span5 well"}
+    %ul{:class => "nav nav-list"}
+      %li.nav-header Monsters
+      - @encounter.monsters.all.uniq.each do |monster|
+        %li= "#{@encounter.monsters.all.count(monster)} #{monster.name}, Level #{monster.level}"
+    %div{:class => "pre-scrollable", :style => "max-height: 20%"}
+      -@encounter.monsters.all.uniq.each do |monster|
+        = image_tag(Monster.image_of(monster), :class => "img-rounded")
+  %div#encounter_container{:class => "offset5"}

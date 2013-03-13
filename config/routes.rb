@@ -1,5 +1,7 @@
 Dndomator::Application.routes.draw do
 
+  root :to => 'root#index'
+
   resources :encounters
 
   resources :monsters do

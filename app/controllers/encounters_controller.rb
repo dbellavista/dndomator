@@ -6,7 +6,7 @@ class EncountersController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @encounters }
+      format.json { render json: @encounters.to_json(:include => :monsters) }
     end
   end
 
@@ -17,7 +17,7 @@ class EncountersController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @encounter }
+      format.json { render json: @encounter.to_json(:include => :monsters) }
     end
   end
 
