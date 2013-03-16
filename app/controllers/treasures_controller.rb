@@ -56,8 +56,10 @@ class TreasuresController < ApplicationController
   def create
 
     params[:treasure][:item] = Item.find(params[:treasure][:item])
-    if !params[:treasure][:hero].nil?
+    if !params[:treasure][:hero].empty?
       params[:treasure][:hero] = Hero.find(params[:treasure][:hero])
+    else
+      params[:treasure][:hero] = nil
     end
 
     @treasure = Treasure.new(params[:treasure])

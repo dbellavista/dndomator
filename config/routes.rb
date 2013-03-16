@@ -6,7 +6,7 @@ Dndomator::Application.routes.draw do
     end
   end
 
-  root :to => 'root#index'
+  root :to => 'encounters#index'
 
   resources :items do
     collection do

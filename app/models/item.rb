@@ -6,10 +6,11 @@ class Item < ActiveRecord::Base
   end
 
   def self.item_path
-    "#{Rails.root}/public/#{relative_monster_path}"
+    "#{Rails.root}/public/#{relative_item_path}"
   end
 
   def self.image_of item
+    return if item.name.nil? or item.level.nil?
     return Item.relative_item_path + item.level.to_s + "_" + item.name + ".png"
   end
 

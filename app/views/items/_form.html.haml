@@ -8,17 +8,21 @@
             %li= msg
 
   %fieldset
-    %div.control-group
-      = f.label :name, :class => "control-label"
-      %div.controls
-        = f.text_field :name
-    %div.control-group
-      = f.label :level, :class => "control-label"
-      %div.controls
-        = f.text_field :level
-    %div.control-group
-      = f.label :value, :class => "control-label"
-      %div.controls
-        = f.decimal_field :value
+    %div.row
+      %div.span5
+        %div.control-group
+          = f.label :name, :class => "control-label"
+          %div.controls
+            = f.text_field :name
+        %div.control-group
+          = f.label :level, :class => "control-label"
+          %div.controls
+            = f.text_field :level
+        %div.control-group
+          = f.label :value, :class => "control-label"
+          %div.controls
+            = f.number_field :value
+      %div.offset6
+        = image_tag(Item.image_of(@item))
     %div.form-actions
       = f.submit 'Save', :class => "btn btn-primary"

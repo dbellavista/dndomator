@@ -5,7 +5,7 @@
 %div{:class => "hero-unit"}
   %dl{:class => "dl-horizontal"}
     %dt Item:
-    %dd=link_to @treasure.item.name, item_path(@treasure.item)
+    %dd=link_to "#{@treasure.item.name} (#{@treasure.item.level})", item_path(@treasure.item)
     %dt Quantity given:
     %dd="#{@treasure.quantity_assigned}/#{@treasure.quantity}"
     %dt Level-Packet:
@@ -24,3 +24,5 @@
     = button_to 'Delete', treasures_path, :method => :delete, :confirm => "Are you sure you want to delete this treasure?", :class => "btn btn-danger btn-large"
   %div.span2
     = button_to 'Back', treasures_path, :method => :get, :class => "btn btn-primary btn-large"
+  %div.span2
+    = button_to 'New', new_treasure_path, :method => :get, :class => "btn btn-primary btn-large"
