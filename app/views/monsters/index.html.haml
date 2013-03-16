@@ -1,22 +1,18 @@
-%h1 Listing monsters
+%div.monster-unit
+  %h1 Monsters
 
-%table
-  %tr
-    %th Name
-    %th Level
-    %th
-    %th
-    %th
-
-  - @monsters.each do |monster|
+%table{:class => "table table-striped table-bordered","data-provides" => "rowlink"}
+  %thead
     %tr
-      %td= monster.name
-      %td= monster.level
-      %td= link_to 'Show', monster
-      %td= link_to 'Edit', edit_monster_path(monster)
-      %td= link_to 'Destroy', monster, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %th Name
+      %th Level
+  %tbody
+    - @monsters.each do |monster|
+      %tr
+        %td= link_to monster.name, monster
+        %td= monster.level
 
-%br
+= link_to 'New Monster', new_monster_path, :class => "btn btn-primary btn-large"
 
-= link_to 'New Monster', new_monster_path
-= link_to 'Auto-Create Monsters', auto_create_monsters_path
+= link_to 'Auto-Create Monsters', auto_create_monsters_path, :class => "btn btn-primary btn-large"
+

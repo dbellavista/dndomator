@@ -13,9 +13,17 @@
   = link_to 'Edit', edit_encounter_path(@encounter)
   = link_to 'Back', encounters_path
 
-  %h2= "#{@encounter.name} encounter"
+  %h2
+    = "#{@encounter.name} encounter (#{@encounter.experience} EXP)"
+    - if @encounter.completed
+      = "- completed"
+    - else
+      = "- progress"
   %div#encounter_commands{:class => "span5 well"}
-    %ul{:class => "nav nav-list"}
+    = form_tag complete_encounter_path(@encounter), :method => :put do
+      = hidden_field_tag :experience, "#{@encounter.experience}"
+      = submit_tag "Complete encounter!", :class => "btn btn-success"
+    %ul{:class => "nav nav-list", :exp => @encounter.experience}
       %li.nav-header Monsters
       - @encounter.monsters.all.uniq.each do |monster|
         %li= "#{@encounter.monsters.all.count(monster)} #{monster.name}, Level #{monster.level}"

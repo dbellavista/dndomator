@@ -1,0 +1,42 @@
+= form_for @treasure, :html => {:class => "form-horizontal" } do |f|
+  - if @treasure.errors.any?
+    #error_explanation
+      %div{:class => "alert alert-error"}
+        %h2= "#{pluralize(@treasure.errors.count, "error")} prohibited this treasure from being saved:"
+        %ul
+          - @treasure.errors.full_messages.each do |msg|
+            %li= msg
+
+  %fieldset
+    - @treasure.quantity ||= 1
+    - @treasure.quantity_assigned ||= 0
+    - @treasure.level ||= Hero.level_of(Hero.first.experience)
+    - @treasure.packet ||= Treasure.next_packet(@treasure.level)
+    %div.control-group
+      = f.label :description, :class => "control-label"
+      %div.controls
+        = f.text_field :description
+    %div.control-group
+      = f.label :level, :class => "control-label"
+      %div.controls
+        = f.number_field :level
+    %div.control-group
+      = f.label :packet, :class => "control-label"
+      %div.controls
+        = f.number_field :packet
+    %div.control-group
+      %div.controls
+        = f.select :item, Item.all.map {|i| [i.name, i.id]}
+    %div.control-group
+      = f.label :quantity, :class => "control-label"
+      %div.controls
+        = f.number_field :quantity
+    %div.control-group
+      = f.label :quantity_assigned, :class => "control-label"
+      %div.controls
+        = f.number_field :quantity_assigned
+    %div.control-group
+      %div.controls
+        = f.select :hero, Hero.all.map {|h| [h.name, h.id]}, :include_blank => true, :selected => @treasure.hero_id
+    %div.form-actions
+      = f.submit 'Save', :class => "btn btn-primary"

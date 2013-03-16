@@ -1,21 +1,29 @@
-%h1 Listing heros
+%div.hero-unit
+  %h1 Heroes
 
-%table
-  %tr
-    %th Name
-    %th Player
-    %th
-    %th
-    %th
-
-  - @heros.each do |hero|
+%table{:class => "table table-striped table-bordered","data-provides" => "rowlink"}
+  %thead
     %tr
-      %td= hero.name
-      %td= hero.player
-      %td= link_to 'Show', hero
-      %td= link_to 'Edit', edit_hero_path(hero)
-      %td= link_to 'Destroy', hero, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %th Name
+      %th Player
+      %th Level
+      %th Experience
+      %th #Items
+  %tbody
+    - @heros.each do |hero|
+      - level = Hero.level_of hero.experience
+      %tr
+        %td
+          =link_to hero.name, hero
+        %td= hero.player
+        %td= level
+        %td= "#{hero.experience} / #{Hero.get_next_experience level}"
+        %td= "#{Hero.given_items(hero).count}/#{hero.treasures.count}"
 
-%br
+= link_to 'New Hero', new_hero_path, :class => "btn btn-primary btn-large"
 
-= link_to 'New Hero', new_hero_path
+%div.hero-unit
+  = form_tag assign_experience_heros_path, :method => :put, :class => "form-inline" do
+    = number_field_tag :experience, 0
+    = submit_tag "Assign experience points", :class => "btn btn-success"
+

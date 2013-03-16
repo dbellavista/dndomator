@@ -1,0 +1,15 @@
+%div.page-header
+  %h2
+    = "#{@item.name} (#{@item.value} gp)"
+  %p="Level #{@item.level}"
+
+%div{:class => "row-fluid"}
+  = image_tag(Item.image_of(@item))
+
+%div{:class => "row-fluid well"}
+  %div.span3
+    = button_to 'Edit', edit_item_path(@item), :method => :get, :class => "btn btn-primary btn-large"
+  %div.span3
+    = button_to 'Delete', items_path, :method => :delete, :confirm => "Are you sure you want to delete item #{@item.name}?", :class => "btn btn-danger btn-large"
+  %div.span3
+    = button_to 'Back', items_path, :method => :get, :class => "btn btn-primary btn-large"

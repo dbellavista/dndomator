@@ -11,12 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130312105818) do
+ActiveRecord::Schema.define(:version => 20130316083716) do
 
   create_table "encounters", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "experience"
+    t.boolean  "completed"
   end
 
   create_table "encounters_monsters", :force => true do |t|
@@ -29,10 +31,18 @@ ActiveRecord::Schema.define(:version => 20130312105818) do
   create_table "heros", :force => true do |t|
     t.string   "name"
     t.string   "player"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.text     "background"
-    t.text     "description"
+    t.integer  "experience"
+  end
+
+  create_table "items", :force => true do |t|
+    t.string   "name"
+    t.integer  "level"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "value"
   end
 
   create_table "monsters", :force => true do |t|
@@ -41,5 +51,20 @@ ActiveRecord::Schema.define(:version => 20130312105818) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "treasures", :force => true do |t|
+    t.text     "description"
+    t.integer  "level"
+    t.integer  "quantity"
+    t.integer  "quantity_assigned"
+    t.integer  "item_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "packet"
+    t.integer  "hero_id"
+  end
+
+  add_index "treasures", ["hero_id"], :name => "index_treasures_on_hero_id"
+  add_index "treasures", ["item_id"], :name => "index_treasures_on_item_id"
 
 end

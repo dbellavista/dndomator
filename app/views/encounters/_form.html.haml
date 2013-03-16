@@ -1,21 +1,62 @@
-= form_for @encounter do |f|
+%script
+  :plain
+    $(function() {
+      function toggleImage($check) {
+        id = $check.attr('id').split("_")[1];
+        if(typeof id === 'undefined') {
+          return;
+        }
+        if($check.is(":checked")) {
+          $('img#img_' + id).show();
+        } else {
+          $('img#img_' + id).hide();
+        }
+      }
+      $(".monster_check").each(function() {
+        toggleImage($(this));
+        });
+      $('.monster_check').click(function() {
+        toggleImage($(this));
+      });
+    });
+
+
+= form_for @encounter, :html => {:class => "form-horizontal" } do |f|
   - if @encounter.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@encounter.errors.count, "error")} prohibited this encounter from being saved:"
-      %ul
-        - @encounter.errors.full_messages.each do |msg|
-          %li= msg
+      %div{:class => "alert alert-error"}
+        %h2= "#{pluralize(@encounter.errors.count, "error")} prohibited this encounter from being saved:"
+        %ul
+          - @encounter.errors.full_messages.each do |msg|
+            %li= msg
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  - Monster.find_each do |monster|
-    %p
-      = check_box_tag "incmonster[#{monster.id}]", true, @encounter.monsters.include?(monster)
-      = "#{monster.name} (#{monster.level})"
-      - if @encounter.monsters.count(monster) > 0
-        = text_field_tag "nummonster[#{monster.id}]", @encounter.monsters.count(monster), :size => 3
-      - else
-        = text_field_tag "nummonster[#{monster.id}]", 1, :size => 3
-  .actions
-    = f.submit 'Save'
+  %fieldset
+    %div.control-group
+      = f.label :name, :class => "control-label"
+      %div.controls
+        = f.text_field :name, :class => "input-xlarge"
+    %div.control-group
+      = f.label :experience, :class => "control-label"
+      %div.controls
+        = f.number_field :experience, :class => "input-xlarge"
+    %div{:class => "control-group"}
+      %div.controls
+        %label{:class => "radio"}
+          = f.check_box :completed
+          = "Completed"
+    - Monster.find_each do |monster|
+      %div{:class => "controls controls-row"}
+        %label{:class => "radio span4"}
+          = "#{monster.name} (#{monster.level})"
+          = check_box_tag "incmonster[#{monster.id}]", true, @encounter.monsters.include?(monster), :class => "monster_check"
+        - if @encounter.monsters.count(:conditions => "monster_id = #{monster.id}") > 0
+          = number_field_tag "nummonster[#{monster.id}]", @encounter.monsters.count(:conditions => "monster_id = #{monster.id}"), :class => "input-mini span4"
+        - else
+          = number_field_tag "nummonster[#{monster.id}]", 1, :class => "input-mini span4"
+
+    %div.form-actions
+      = f.submit 'Save', :class => "btn btn-primary"
+
+- Monster.find_each do |monster|
+  = image_tag(Monster.image_of(monster), :class => "img-rounded", :id => "img_#{monster.id}")
+

@@ -1,24 +1,20 @@
-%h1 Listing encounters
+%div.hero-unit
+  %h1 Encounters
 
-%table
-  %tr
-    %th Name
-    %th Monster
-    %th
-    %th
-    %th
-
-  - @encounters.each do |encounter|
+%table{:class => "table table-striped table-bordered","data-provides" => "rowlink"}
+  %thead
     %tr
-      %td= encounter.name
+      %th Name
+      %th Monsters
+      %th Experience
+  %tbody
+  - @encounters.each do |encounter|
+    %tr{:class => (encounter.completed) ? "success" : "progress"}
+      %td
+        = link_to encounter.name, encounter
       %td
         - encounter.monsters.all.uniq.each do |monster|
-          = "#{encounter.monsters.all.count(monster)} #{monster.name}, Level #{monster.level}"
+          = "#{encounter.monsters.all.count(monster)} #{monster.name} (Level #{monster.level}) "
+      %td= encounter.experience
 
-      %td= link_to 'Show', encounter
-      %td= link_to 'Edit', edit_encounter_path(encounter)
-      %td= link_to 'Destroy', encounter, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Encounter', new_encounter_path
+= link_to 'New Encounter', new_encounter_path, :class => "btn btn-primary btn-large"

@@ -62,10 +62,36 @@ class EncountersController < ApplicationController
     end
   end
 
+  def complete
+    @encounter = Encounter.find(params[:id])
+    already_completed = @encounter.completed
+    Hero.assignExperience params[:experience].to_i
+
+    respond_to do |format|
+      if !already_completed and @encounter.update_attribute(:completed, true)
+        format.html { redirect_to @encounter, notice: 'Encounter completed!' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "show" }
+        format.json { render json: @encounter.errors, status: :unprocessable_entity }
+      end
+    end
+  end
   # PUT /encounters/1
   # PUT /encounters/1.json
   def update
+
     @encounter = Encounter.find(params[:id])
+
+    params[:encounter][:monsters] = []
+    params[:incmonster].each do |monster, value|
+      @encounter.monsters.delete(Monster.find(monster.to_i))
+      next unless value == "true"
+      (1..params[:nummonster][monster].to_i).each do
+        #@encounter.monsters << Monster.find(monster.to_i)
+        params[:encounter][:monsters] << Monster.find(monster.to_i)
+      end
+    end
 
     respond_to do |format|
       if @encounter.update_attributes(params[:encounter])

@@ -42,7 +42,7 @@ function initEncounter(encounter_path, heroes_path) {
       </div>\
 		');
 
-	$('#encounter_commands').affix();
+	//$('#encounter_commands').affix();
 
   $('#encounter_container').append('<div class="span10"><dl id="encounter" class="dl-horizontal"></dl></div>');
 

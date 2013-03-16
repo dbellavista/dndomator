@@ -1,0 +1,29 @@
+%div.item-unit
+  %h1 Treasures
+
+%table{:class => "table table-striped table-bordered","data-provides" => "rowlink"}
+  %thead
+    %tr
+      %th Description
+      %th Level.Packet
+      %th Quantity
+      %th Quantity assigned
+      %th Item
+      %th Hero
+      %th Action
+  %tbody
+    - @treasures.each do |treasure|
+      %tr{:class => (Treasure.complete? treasure) ? "success" : ""}
+        %td= link_to treasure.description, treasure
+        %td= "#{treasure.level}.#{treasure.packet}"
+        %td= treasure.quantity
+        %td= treasure.quantity_assigned
+        %td= link_to treasure.item.name, treasure.item, :class => "nolink"
+        %td
+          - if !treasure.hero.nil?
+            = link_to treasure.hero.name, treasure.hero, :class => "nolink"
+        %td= link_to "Give treasure", give_treasure_path(treasure), :class => "btn btn-primary nolink", :method => :put
+
+%br
+
+= link_to 'New Treasure', new_treasure_path, :class => "btn btn-primary btn-large"

@@ -1,0 +1,20 @@
+%div.item-unit
+  %h1 Items
+
+%table{:class => "table table-striped table-bordered","data-provides" => "rowlink"}
+  %thead
+    %tr
+      %th Name
+      %th Level
+      %th Value
+  %tbody
+    - @items.each do |item|
+      %tr
+        %td=link_to item.name, item
+        %td= item.level
+        %td= item.value
+
+= link_to 'New Item', new_item_path, :class => "btn btn-primary btn-large"
+
+= link_to 'Auto-Create Items', auto_create_items_path, :class => "btn btn-primary btn-large"
+

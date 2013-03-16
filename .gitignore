@@ -19,6 +19,8 @@
 
 # Local files #
 ###############
+public/imgs
+tmp/
 
 # Configuation files #
 ######################

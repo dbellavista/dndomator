@@ -1,8 +1,24 @@
 Dndomator::Application.routes.draw do
 
+  resources :treasures do
+    member do
+      put 'give'
+    end
+  end
+
   root :to => 'root#index'
 
-  resources :encounters
+  resources :items do
+    collection do
+      get 'auto_create'
+    end
+  end
+
+  resources :encounters do
+    member do
+      put 'complete'
+    end
+  end
 
   resources :monsters do
     collection do
@@ -10,7 +26,11 @@ Dndomator::Application.routes.draw do
     end
   end
 
-  resources :heros
+  resources :heros do
+    collection do
+      put 'assign_experience'
+    end
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

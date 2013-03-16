@@ -1,14 +1,15 @@
-%p#notice= notice
+%div.page-header
+  %h2
+    = @monster.name
+  %p="Level #{@monster.level}"
 
-%p
-  %b Name:
-  = @monster.name
-%p
-  %b Level:
-  = @monster.level
+%div{:class => "row-fluid"}
+  = image_tag(Monster.image_of(@monster))
 
-= image_tag(Monster.image_of(@monster))
-
-= link_to 'Edit', edit_monster_path(@monster)
-\|
-= link_to 'Back', monsters_path
+%div{:class => "row-fluid well"}
+  %div.span3
+    = button_to 'Edit', edit_monster_path(@monster), :method => :get, :class => "btn btn-primary btn-large"
+  %div.span3
+    = button_to 'Delete', monsters_path, :method => :delete, :confirm => "Are you sure you want to delete monster #{@monster.name}?", :class => "btn btn-danger btn-large"
+  %div.span3
+    = button_to 'Back', monsters_path, :method => :get, :class => "btn btn-primary btn-large"

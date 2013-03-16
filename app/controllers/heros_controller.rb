@@ -21,6 +21,15 @@ class HerosController < ApplicationController
     end
   end
 
+  def assign_experience
+
+    exp = Hero.assignExperience params[:experience].to_i
+
+    respond_to do |format|
+      format.html { redirect_to heros_path, notice: "Assigned #{exp} experience points each!" }
+    end
+  end
+
   # GET /heros/new
   # GET /heros/new.json
   def new
