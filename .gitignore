@@ -16,6 +16,7 @@
 *.log
 *.sql
 *.sqlite
+*.sqlite3
 
 # Local files #
 ###############
