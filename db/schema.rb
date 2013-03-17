@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130316083716) do
+ActiveRecord::Schema.define(:version => 20130316170543) do
 
   create_table "encounters", :force => true do |t|
     t.string   "name"
@@ -50,6 +50,23 @@ ActiveRecord::Schema.define(:version => 20130316083716) do
     t.integer  "level"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "skill_challenges", :force => true do |t|
+    t.string   "name"
+    t.text     "context"
+    t.integer  "complexity"
+    t.integer  "level"
+    t.text     "primary_skill"
+    t.text     "secondary_skill"
+    t.text     "success"
+    t.text     "failure"
+    t.boolean  "completed"
+    t.boolean  "succeded"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "progress_success"
+    t.integer  "progress_failure"
   end
 
   create_table "treasures", :force => true do |t|

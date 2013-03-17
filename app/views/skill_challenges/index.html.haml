@@ -1,0 +1,20 @@
+%div.hero-unit
+  %h1 Skill Challenges
+
+%table{:class => "table table-striped table-bordered","data-provides" => "rowlink"}
+  %thead
+    %tr
+      %th Name
+      %th Context
+      %th Complexity
+      %th Level
+
+  %tbody
+  - @skill_challenges.each do |skill_challenge|
+    %tr{:class => (skill_challenge.completed) ? (skill_challenge.succeded) ? "success" : "error" : "progress"}
+      %td= link_to skill_challenge.name, skill_challenge
+      %td= skill_challenge.context
+      %td= skill_challenge.complexity
+      %td= skill_challenge.level
+
+= link_to 'New Skill challenge', new_skill_challenge_path, :class => "btn btn-primary btn-large"

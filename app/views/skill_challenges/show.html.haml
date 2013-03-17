@@ -1,0 +1,43 @@
+%div.page-header
+  %h2
+    = "#{@skill_challenge.name} (#{(@skill_challenge.completed) ? (@skill_challenge.succeded) ? "succeded" : "failed" : "progress"})"
+  %p="Complexity: #{@skill_challenge.complexity} (#{SkillChallenge.number_of_success(@skill_challenge)} success before #{SkillChallenge.number_of_failures(@skill_challenge)} failure)"
+  %p="Level #{@skill_challenge.level} (#{SkillChallenge.experience_of(@skill_challenge)} EXP)"
+
+%div{:class => "row-fluid well"}
+  %div{:class => "span4"}
+    %ul
+      %li.nav-header CONTEXT
+      - @skill_challenge.context.split(/\n\W*\n/).each do |b|
+        %li= b
+      %li.nav-header SUCCESS
+      %li= @skill_challenge.success
+      %li.nav-header FAILURE
+      %li= @skill_challenge.failure
+  %div{:class => "span4"}
+    %ul
+      %li.nav-header PRIMARY SKILLS
+      - @skill_challenge.primary_skill.split(/\n\W*\n/).each do |b|
+        %li= b
+      %li.nav-header SECONDARY SKILLS
+      - @skill_challenge.secondary_skill.split(/\n\W*\n/).each do |b|
+        %li= b
+
+%div{:class => "row-fluid well"}
+  %div.span3
+    = button_to 'SUCCESS', success_skill_challenge_path(@skill_challenge), :method => :put, :class => "btn btn-success btn-large"
+  %div.span3
+    %h1
+      %span.text-success= @skill_challenge.progress_success
+      %span="/"
+      %span.text-error= @skill_challenge.progress_failure
+  %div.span3
+    = button_to 'FAILURE', failure_skill_challenge_path(@skill_challenge), :method => :put, :class => "btn btn-danger btn-large"
+
+%div{:class => "row-fluid"}
+  %div.span3
+    = button_to 'Edit', edit_skill_challenge_path(@skill_challenge), :method => :get, :class => "btn btn-primary"
+  %div.span3
+    = button_to 'Delete', skill_challenges_path, :method => :delete, :confirm => "Are you sure you want to delete the skill challenge #{@skill_challenge.name}?", :class => "btn btn-danger"
+  %div.span3
+    = button_to 'Back', skill_challenges_path, :method => :get, :class => "btn btn-primary"

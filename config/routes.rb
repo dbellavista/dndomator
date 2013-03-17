@@ -1,5 +1,14 @@
 Dndomator::Application.routes.draw do
 
+  resources :skill_challenges do
+    member do
+      put 'success'
+      put 'failure'
+    end
+  end
+
+
+
   resources :treasures do
     member do
       put 'give'

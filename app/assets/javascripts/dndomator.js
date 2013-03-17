@@ -37,14 +37,14 @@ function initEncounter(encounter_path, heroes_path) {
         </div>\
         <div id="turn">\
           <button id="next" class="btn btn-primary">Next Turn</button>\
-          <p id="timeout"></p>\
+          <h2 id="timeout" class="text-error"></h2>\
         </div>\
       </div>\
 		');
 
 	//$('#encounter_commands').affix();
 
-  $('#encounter_container').append('<div class="span10"><dl id="encounter" class="dl-horizontal"></dl></div>');
+  $('#encounter_container').append('<div class="span10"><dl id="encounter"></dl></div>');
 
   // Monsters
   $.getJSON(encounter_path, function(data) {

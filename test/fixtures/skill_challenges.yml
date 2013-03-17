@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  context: MyText
+  complexity: 1
+  level: 1
+  primary_skill: MyText
+  secondary_skill: MyText
+  success: MyText
+  failure: MyText
+  completed: false
+  succeded: false
+
+two:
+  name: MyString
+  context: MyText
+  complexity: 1
+  level: 1
+  primary_skill: MyText
+  secondary_skill: MyText
+  success: MyText
+  failure: MyText
+  completed: false
+  succeded: false
