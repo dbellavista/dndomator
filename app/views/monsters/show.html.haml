@@ -1,10 +1,12 @@
 %div.page-header
   %h2
     = @monster.name
-  %p="Level #{@monster.level}"
+  %p
+    = @monster.normal? ? "" : "#{@monster.tier.capitalize} Monster"
+    = "Level #{@monster.level}"
 
 %div{:class => "row-fluid"}
-  = image_tag(Monster.image_of(@monster))
+  = image_tag(@monster.image)
 
 %div{:class => "row-fluid well"}
   %div.span3

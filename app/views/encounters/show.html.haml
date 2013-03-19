@@ -29,5 +29,5 @@
         %li= "#{@encounter.monsters.all.count(monster)} #{monster.name}, Level #{monster.level}"
     %div{:class => "pre-scrollable", :style => "max-height: 450px"}
       -@encounter.monsters.all.uniq.each do |monster|
-        = image_tag(Monster.image_of(monster), :class => "img-rounded")
+        = image_tag(monster.image, :class => "img-rounded")
   %div#encounter_container{:class => "offset5"}

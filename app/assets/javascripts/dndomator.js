@@ -1,3 +1,56 @@
+function create_encounter_creation(target_exp) {
+
+      var target = target_exp;
+
+      function toggleImage($check) {
+        id = $check.attr('id').split("_")[1];
+        if(typeof id === 'undefined') {
+          return;
+        }
+        if($check.is(":checked")) {
+          $('img#img_' + id).show();
+        } else {
+          $('img#img_' + id).hide();
+        }
+      }
+
+      function refreshExp() {
+
+        total_exp = 0;
+
+        $('.monster-check').each(function (){
+          id = $(this).attr('id').split("_")[1];
+          exp = parseInt($('#expmonster_' + id).val()) || 0;
+          n = parseInt($('#nummonster_' + id).val()) || 0;
+
+          if($(this).is(":checked")) {
+            total_exp += exp * n;
+          }
+        });
+        $('#computed-exp').val(total_exp);
+        var i = 0;
+        for(; i < target.length; i++) {
+          if(target[i] > total_exp) {
+            break;
+          }
+        }
+        $('#target-lev').html(i);
+      }
+
+      $(".monster-check").each(function() {
+        toggleImage($(this));
+        refreshExp();
+      });
+
+      $('.monster-check').click(function() {
+        toggleImage($(this));
+        refreshExp();
+      });
+
+      $(".nummonster").change(function(e) {
+        refreshExp();
+      });
+}
 
 function create_fighter(data, className) {
   var html = '\

@@ -23,6 +23,6 @@
           %div.controls
             = f.number_field :value
       %div.offset6
-        = image_tag(Item.image_of(@item))
+        = image_tag(item.image)
     %div.form-actions
       = f.submit 'Save', :class => "btn btn-primary"

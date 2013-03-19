@@ -1,23 +1,9 @@
 %script
   :plain
     $(function() {
-      function toggleImage($check) {
-        id = $check.attr('id').split("_")[1];
-        if(typeof id === 'undefined') {
-          return;
-        }
-        if($check.is(":checked")) {
-          $('img#img_' + id).show();
-        } else {
-          $('img#img_' + id).hide();
-        }
-      }
-      $(".monster_check").each(function() {
-        toggleImage($(this));
-        });
-      $('.monster_check').click(function() {
-        toggleImage($(this));
-      });
+  ="var target = #{Encounter.exp.map { |e|  e * 5} }"
+  :plain
+    create_encounter_creation(target);
     });
 
 
@@ -30,33 +16,39 @@
           - @encounter.errors.full_messages.each do |msg|
             %li= msg
 
-  %fieldset
-    %div.control-group
-      = f.label :name, :class => "control-label"
-      %div.controls
-        = f.text_field :name, :class => "input-xlarge"
-    %div.control-group
-      = f.label :experience, :class => "control-label"
-      %div.controls
-        = f.number_field :experience, :class => "input-xlarge"
-    %div{:class => "control-group"}
-      %div.controls
-        %label{:class => "radio"}
+  %div.row-fluid
+    %fieldset
+      %div.span6
+        %div.control-group
+          = f.label :name, :class => "control-label"
+          %div.controls
+            = f.text_field :name, :class => "input-xlarge"
+        %div{:class => "control-group row-fluid"}
+          = f.label :experience, :class => "control-label"
+          %div{:class => "span2"}
+            = f.number_field :experience, :class => "input-small"
+          %div{:class => "offset6 "}
+            = f.number_field :experience, :class => "input-small", :id => "computed-exp"
+            Target:
+            %span{:id => "target-lev"} 
+        %label.radio
           = f.check_box :completed
           = "Completed"
-    - Monster.find_each do |monster|
-      %div{:class => "controls controls-row"}
-        %label{:class => "radio span4"}
-          = "#{monster.name} (#{monster.level})"
-          = check_box_tag "incmonster[#{monster.id}]", true, @encounter.monsters.include?(monster), :class => "monster_check"
-        - if @encounter.monsters.count(:conditions => "monster_id = #{monster.id}") > 0
-          = number_field_tag "nummonster[#{monster.id}]", @encounter.monsters.count(:conditions => "monster_id = #{monster.id}"), :class => "input-mini span4"
-        - else
-          = number_field_tag "nummonster[#{monster.id}]", 1, :class => "input-mini span4"
+        - monsters = Monster.find(:all, :order => "level DESC")
+        - monsters.each do |monster|
+          %div{:class => "controls-row"}
+            %label{:class => "span8"}
+              = "#{monster.name} (#{monster.tier.capitalize} #{monster.level})"
+              = check_box_tag "incmonster[#{monster.id}]", true, @encounter.monsters.include?(monster), :class => "monster-check"
+              = hidden_field_tag "expmonster[#{monster.id}]", monster.experience
+            - count = @encounter.monsters.count(:conditions => "monster_id = #{monster.id}")
+            - count = 1 if count == 0
+            = number_field_tag "nummonster[#{monster.id}]", count, :class => "input-mini span2 nummonster"
+      %div.span5
+        - monsters.each do |monster|
+          = image_tag(monster.image, :class => "img-rounded", :id => "img_#{monster.id}")
 
-    %div.form-actions
-      = f.submit 'Save', :class => "btn btn-primary"
+  %div.form-actions
+    = f.submit 'Save', :class => "btn btn-primary"
 
-- Monster.find_each do |monster|
-  = image_tag(Monster.image_of(monster), :class => "img-rounded", :id => "img_#{monster.id}")
 
