@@ -7,6 +7,12 @@
   = "#{heros_path(:format => :json)}\\"
   :plain
     ");
+    $("[id^='cmd']").each(function (i, e) {
+      $(this).click(function () {
+        id = $(this).attr("id").split("-")[1]
+        $("#"+id).toggle();
+      });
+    });
     });
 
 %div{:class => "row-fluid"}
@@ -19,15 +25,31 @@
       = "- completed"
     - else
       = "- progress"
-  %div#encounter_commands{:class => "span5 well", :style => "position: fixed;"}
+  %div#encounter_commands{:class => "span5 well", :style => "position: fixed; height: 70%"}
     = form_tag complete_encounter_path(@encounter), :method => :put do
       = hidden_field_tag :experience, "#{@encounter.experience}"
       = submit_tag "Complete encounter!", :class => "btn btn-success"
-    %ul{:class => "nav nav-list", :exp => @encounter.experience}
-      %li.nav-header Monsters
-      - @encounter.monsters.all.uniq.each do |monster|
-        %li= "#{@encounter.monsters.all.count(monster)} #{monster.name}, Level #{monster.level}"
-    %div{:class => "pre-scrollable", :style => "max-height: 450px"}
-      -@encounter.monsters.all.uniq.each do |monster|
-        = image_tag(monster.image, :class => "img-rounded")
+    %ul{:class => "nav nav-list pre-scrollable", :exp => @encounter.experience, :style => "max-height: 70%"}
+      %li{:class => "nav-header", :id => "cmd-setup"} SETUP
+      %div#setup
+        - @encounter.setup.split(/\n\W*\n/).each do |b|
+          %li= b
+      %li{:class => "nav-header", :id => "cmd-tactics"} TACTICS
+      %div#tactics
+        - @encounter.tactics.split(/\n\W*\n/).each do |b|
+          %li= b
+      %li{:class => "nav-header", :id => "cmd-features"} FEATURES
+      %div#features
+        - @encounter.features.split(/\n\W*\n/).each do |b|
+          %li= b
+      %li{:class => "nav-header", :id => "cmd-conclusion"} CONCLUSION
+      %div#conclusion
+        - @encounter.conclusion.split(/\n\W*\n/).each do |b|
+          %li= b
+      %li{:class => "nav-header", :id => "cmd-monsters"} MONSTERS
+      %div#monsters
+        - @encounter.monsters.all.uniq.each do |monster|
+          %li= "#{@encounter.monsters.all.count(monster)} #{monster.name}, Level #{monster.level}"
+        -@encounter.monsters.all.uniq.each do |monster|
+          = image_tag(monster.image, :class => "img-rounded")
   %div#encounter_container{:class => "offset5"}

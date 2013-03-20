@@ -144,11 +144,11 @@ function encounter() {
 	function startCountDown() {
 		clearInterval(countdown);
 		var count = 10;
-		$("p#timeout").toggleClass("expired", false);
+		$("#timeout").toggleClass("expired", false);
 		countdown = setInterval(function() {
-			$("p#timeout").html(count + " s");
+			$("#timeout").html(count + " s");
 			if(count == 0) {
-				$("p#timeout").toggleClass("expired", true);
+				$("#timeout").toggleClass("expired", true);
 				clearInterval(countdown);
 			}
 			count -= 1;
@@ -216,9 +216,8 @@ function encounter() {
 		if($maxhp.length == 0) {
 			return;
 		}
-		var maxHp = parseInt($maxhp[0].value);
-		var hp = parseInt($fighter.find("#hp")[0].value);
-
+		var maxHp = parseInt($maxhp.val());
+		var hp = parseInt($fighter.find("#hp").first().val());
 		if(isNaN(hp) || isNaN(maxHp)) {
 			return;
 		}
@@ -238,13 +237,13 @@ function encounter() {
 		if(code != 13) {
 			return;
 		}
-		var hp = parseInt($(this)[0].value);
+		var hp = parseInt($(this).val());
 		if(isNaN(hp)) {
 			return;
 		}
-		$(this).siblings("#maxhp")[0].value = hp;
+		$(this).siblings("#maxhp").val(hp);
 		// Update flags
-		updateFlags($(this).parent().parent());
+		updateFlags($(this).parents("#fighter"));
 		$(this).blur();
 
 	});
@@ -254,20 +253,20 @@ function encounter() {
 		if(code != 13) {
 			return;
 		}
-		$hp = $(this).parent().find("#hp");
-		var currDamage = parseInt($(this)[0].value);
-		$(this)[0].value = "";
+		$hp = $(this).parents("#fighter").find("#hp").first();
+		var currDamage = parseInt($(this).val());
+		$(this).val("");
 		if(isNaN(currDamage)) {
 			return;
 		}
 
-		var hp = parseInt($hp[0].value);
+		var hp = parseInt($hp.val());
 		if(isNaN(hp)) {
 			return;
 		}
-		$hp[0].value = hp - currDamage;
+		$hp.val(hp - currDamage);
 		// Update flags
-		updateFlags($(this).parent());
+		updateFlags($(this).parents("#fighter"));
 
 		$(this).blur();
 	});

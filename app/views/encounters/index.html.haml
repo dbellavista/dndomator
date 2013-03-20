@@ -15,6 +15,6 @@
       %td
         - encounter.monsters.all.uniq.each do |monster|
           = "#{encounter.monsters.all.count(monster)} #{monster.name} (Level #{monster.level}) "
-      %td= "Level #{encounter.target_level 5}, Exp: #{encounter.experience}"
+      %td= "Level #{encounter.target_level Hero.count()}, Exp: #{encounter.experience}"
 
 = link_to 'New Encounter', new_encounter_path, :class => "btn btn-primary btn-large"

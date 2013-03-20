@@ -1,7 +1,7 @@
 %script
   :plain
     $(function() {
-  ="var target = #{Encounter.exp.map { |e|  e * 5} }"
+  ="var target = #{Encounter.exp.map { |e|  e * Hero.count()} }"
   :plain
     create_encounter_creation(target);
     });
@@ -16,25 +16,33 @@
           - @encounter.errors.full_messages.each do |msg|
             %li= msg
 
-  %div.row-fluid
-    %fieldset
+  %div.form-actions
+    = f.submit 'Save', :class => "btn btn-primary"
+  %fieldset
+    %div.control-group
+      = f.text_field :name, :class => "input-xlarge", :placeholder => "Name"
+    %div.row-fluid
+      %div{:class => "control-group span3"}
+        = f.text_area :setup, :class => "input-normal", :placeholder => "Setup"
+      %div{:class => "control-group span3"}
+        = f.text_area :tactics, :class => "input-normal", :placeholder => "Tactics"
+      %div{:class => "control-group span3"}
+        = f.text_area :features, :class => "input-normal", :placeholder => "Features"
+      %div{:class => "control-group span3"}
+        = f.text_area :conclusion, :class => "input-normal", :placeholder => "Conclusion"
+    %div.row-fluid
       %div.span6
-        %div.control-group
-          = f.label :name, :class => "control-label"
-          %div.controls
-            = f.text_field :name, :class => "input-xlarge"
         %div{:class => "control-group row-fluid"}
-          = f.label :experience, :class => "control-label"
           %div{:class => "span2"}
-            = f.number_field :experience, :class => "input-small"
-          %div{:class => "offset6 "}
-            = f.number_field :experience, :class => "input-small", :id => "computed-exp"
+            = f.number_field :experience, :class => "input-small", :placeholder => "Exp"
+          %div{:class => "offset3 "}
+            = number_field_tag "computed-exp", 0, :class => "input-small"
             Target:
             %span{:id => "target-lev"} 
         %label.radio
           = f.check_box :completed
           = "Completed"
-        - monsters = Monster.find(:all, :order => "level DESC")
+        - monsters = Monster.all(:order => "level DESC, name ASC")
         - monsters.each do |monster|
           %div{:class => "controls-row"}
             %label{:class => "span8"}
@@ -47,8 +55,3 @@
       %div.span5
         - monsters.each do |monster|
           = image_tag(monster.image, :class => "img-rounded", :id => "img_#{monster.id}")
-
-  %div.form-actions
-    = f.submit 'Save', :class => "btn btn-primary"
-
-

@@ -63,10 +63,10 @@ class MonstersController < ApplicationController
       splitted = File.basename(item, ext).split("_")
       level = Integer(splitted[0])
       name = splitted[1]
-      param = {:name => name, :level => level}
+      param = {:name => name, :level => level, :tier => Monster.tiers[0]}
       next if Monster.exists? param
       @monster = Monster.new(param)
-      errors = errors + "; " + @monster.errors unless @monster.save
+      errors = errors + "; " + @monster.errors.full_messages.to_s unless @monster.save
     end
 
     respond_to do |format|

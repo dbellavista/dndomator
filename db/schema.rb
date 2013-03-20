@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130318160918) do
+ActiveRecord::Schema.define(:version => 20130319150056) do
 
   create_table "encounters", :force => true do |t|
     t.string   "name"
@@ -19,6 +19,10 @@ ActiveRecord::Schema.define(:version => 20130318160918) do
     t.datetime "updated_at", :null => false
     t.integer  "experience"
     t.boolean  "completed"
+    t.text     "setup"
+    t.text     "tactics"
+    t.text     "features"
+    t.text     "conclusion"
   end
 
   create_table "encounters_monsters", :force => true do |t|

@@ -38,6 +38,6 @@
   %div.span3
     = button_to 'Edit', edit_skill_challenge_path(@skill_challenge), :method => :get, :class => "btn btn-primary"
   %div.span3
-    = button_to 'Delete', skill_challenges_path, :method => :delete, :confirm => "Are you sure you want to delete the skill challenge #{@skill_challenge.name}?", :class => "btn btn-danger"
+    = button_to 'Delete', skill_challenge_path(@skill_challenge), :method => :delete, :confirm => "Are you sure you want to delete the skill challenge #{@skill_challenge.name}?", :class => "btn btn-danger"
   %div.span3
     = button_to 'Back', skill_challenges_path, :method => :get, :class => "btn btn-primary"

@@ -2,7 +2,7 @@ class EncountersController < ApplicationController
   # GET /encounters
   # GET /encounters.json
   def index
-    @encounters = Encounter.all
+    @encounters = Encounter.all(:order => "completed, created_at ASC")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -65,7 +65,7 @@ class EncountersController < ApplicationController
   def complete
     @encounter = Encounter.find(params[:id])
     already_completed = @encounter.completed
-    Hero.assignExperience params[:experience].to_i
+    Hero.assign_experience params[:experience].to_i
 
     respond_to do |format|
       if !already_completed and @encounter.update_attribute(:completed, true)
