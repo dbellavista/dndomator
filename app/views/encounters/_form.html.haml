@@ -1,7 +1,8 @@
 %script
   :plain
     $(function() {
-  ="var target = #{Encounter.exp.map { |e|  e * Hero.count()} }"
+  ="var target = #{Encounter.exp.map { |e|  e * Hero.count()} };"
+  = raw "var kinds = #{Monster.kinds.map {|k| "##{k}"}};"
   :plain
     create_encounter_creation(target);
     });
@@ -42,16 +43,21 @@
         %label.radio
           = f.check_box :completed
           = "Completed"
-        - monsters = Monster.all(:order => "level DESC, name ASC")
-        - monsters.each do |monster|
-          %div{:class => "controls-row"}
-            %label{:class => "span8"}
-              = "#{monster.name} (#{monster.tier.capitalize} #{monster.level})"
-              = check_box_tag "incmonster[#{monster.id}]", true, @encounter.monsters.include?(monster), :class => "monster-check"
-              = hidden_field_tag "expmonster[#{monster.id}]", monster.experience
-            - count = @encounter.monsters.count(:conditions => "monster_id = #{monster.id}")
-            - count = 1 if count == 0
-            = number_field_tag "nummonster[#{monster.id}]", count, :class => "input-mini span2 nummonster"
-      %div.span5
-        - monsters.each do |monster|
+        - Monster.kinds.each do |k|
+          %ul{:class => "nav nav-list pre-scrollable"}
+            %li{:class => "nav-header", :id => "cmd-setup"}= k.upcase
+            %div{:id => k }
+              - monsters = Monster.find_all_by_kind(k, :order => "level DESC, name ASC")
+              - monsters.each do |monster|
+                %li
+                  %div{:class => "controls-row"}
+                    %label{:class => "span8"}
+                      = "#{monster.name} (#{monster.tier.capitalize} #{monster.level})"
+                      = check_box_tag "incmonster[#{monster.id}]", true, @encounter.monsters.include?(monster), :class => "monster-check"
+                      = hidden_field_tag "expmonster[#{monster.id}]", monster.experience
+                    - count = @encounter.monsters.count(:conditions => "monster_id = #{monster.id}")
+                    - count = 1 if count == 0
+                    = number_field_tag "nummonster[#{monster.id}]", count, :class => "input-mini span2 nummonster"
+      %div{:class => "span5", :id => "imgmonster"}
+        - Monster.find_each do |monster|
           = image_tag(monster.image, :class => "img-rounded", :id => "img_#{monster.id}")

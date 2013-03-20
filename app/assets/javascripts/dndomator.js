@@ -102,8 +102,10 @@ function initEncounter(encounter_path, heroes_path) {
   // Monsters
   $.getJSON(encounter_path, function(data) {
     $.each(data["monsters"], function(key, val) {
-      var html = create_fighter(val, 'monster');
-      $("#encounter").append(html);
+      if(val["kind"] == "creature") { 
+        var html = create_fighter(val, 'monster');
+        $("#encounter").append(html);
+      }
     });
     // Heroes
     $.getJSON(heroes_path, function(data) {

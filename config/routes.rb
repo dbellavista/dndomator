@@ -7,8 +7,6 @@ Dndomator::Application.routes.draw do
     end
   end
 
-
-
   resources :treasures do
     member do
       put 'give'

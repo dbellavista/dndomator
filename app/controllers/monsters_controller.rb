@@ -2,7 +2,9 @@ class MonstersController < ApplicationController
   # GET /monsters
   # GET /monsters.json
   def index
-    @monsters = Monster.all(:order => "level DESC")
+    Monster.kinds.each do |k|
+      instance_variable_set("@#{k.pluralize}", Monster.find_all_by_kind(k, :order => "level DESC"));
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -63,10 +65,11 @@ class MonstersController < ApplicationController
       splitted = File.basename(item, ext).split("_")
       level = Integer(splitted[0])
       name = splitted[1]
-      param = {:name => name, :level => level, :tier => Monster.tiers[0]}
+      param = {:name => name, :level => level}
       next if Monster.exists? param
+      param = param.merge({:tier => Monster.tiers[0], :kind => Monster.uncategorized})
       @monster = Monster.new(param)
-      errors = errors + "; " + @monster.errors.full_messages.to_s unless @monster.save
+      errors = "#{errors}; #{@monster.errors.full_messages.to_s} #{param}"  unless @monster.save
     end
 
     respond_to do |format|

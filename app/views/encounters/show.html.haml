@@ -25,11 +25,12 @@
       = "- completed"
     - else
       = "- progress"
-  %div#encounter_commands{:class => "span5 well", :style => "position: fixed; height: 70%"}
+  %div#encounter_commands{:class => "offset9 well", :style => "position: fixed"}
     = form_tag complete_encounter_path(@encounter), :method => :put do
       = hidden_field_tag :experience, "#{@encounter.experience}"
       = submit_tag "Complete encounter!", :class => "btn btn-success"
-    %ul{:class => "nav nav-list pre-scrollable", :exp => @encounter.experience, :style => "max-height: 70%"}
+  %div#encounter_data{:class => "span5 well", :style => "height: 90%"}
+    %ul{:class => "nav nav-list pre-scrollable", :style => ""}
       %li{:class => "nav-header", :id => "cmd-setup"} SETUP
       %div#setup
         - @encounter.setup.split(/\n\W*\n/).each do |b|
@@ -50,6 +51,8 @@
       %div#monsters
         - @encounter.monsters.all.uniq.each do |monster|
           %li= "#{@encounter.monsters.all.count(monster)} #{monster.name}, Level #{monster.level}"
+    %ul{:class => "nav nav-list"}
+      %li
         -@encounter.monsters.all.uniq.each do |monster|
           = image_tag(monster.image, :class => "img-rounded")
   %div#encounter_container{:class => "offset5"}
