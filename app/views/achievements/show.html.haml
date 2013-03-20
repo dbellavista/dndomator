@@ -8,8 +8,8 @@
 
 %div.page-header.hero-unit
   %h1
+    = image_tag @achievement.image, :width => "300px"
     = "#{@achievement.name}"
-    = image_tag(@achievement.image)
 - unless @achievement.hero.nil?
   %div.page-header
     %h3

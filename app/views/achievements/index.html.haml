@@ -12,11 +12,11 @@
   %tbody
     - @achievements.each do |achievement|
       %tr
-        %td= image_tag(achievement.image)
+        %td= image_tag achievement.image, :width => "120px"
         %td
           =link_to achievement.name, achievement
         %td= achievement.description
-        %td.nolink= link_to achievement.hero.name, achievement.hero
+        %td.nolink= link_to achievement.hero.name, achievement.hero unless achievement.hero.nil?
         %td= achievement.instance
 
 = link_to 'New Achievement', new_achievement_path, :class => "btn btn-primary btn-large"
