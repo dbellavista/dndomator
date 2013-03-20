@@ -18,9 +18,10 @@ class Hero < ActiveRecord::Base
     end
     return items
   end
-  def self.level_of experience
-    self.ex_points.each_with_index do |v,i|
-      return i unless experience >= v
+
+  def level
+    Hero.ex_points.each_with_index do |v,i|
+      return i unless self.experience >= v
     end
     return 30
   end

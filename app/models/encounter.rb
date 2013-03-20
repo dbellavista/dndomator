@@ -14,6 +14,12 @@ class Encounter < ActiveRecord::Base
   has_and_belongs_to_many :monsters
   accepts_nested_attributes_for :monsters
   attr_accessible :monsters
-  attr_accessible :name, :experience, :completed, :setup, :tactics, :features, :conclusion
+  attr_accessible :name, :experience, :completed, :setup, :tactics, :features, :conclusion, :bypassed
+
+  validates :experience, :numericality => {:grather_than_or_equal_to => 0}
+  validates :completed, :inclusion => {:in => [true, false], :allow_nil => false}
+  validates :bypassed, :inclusion => {:in => [true, false], :allow_nil => false}
+
+  validates :completed, :inclusion => {:in => [true]}, :if => lambda { |o| o.bypassed }
 
 end

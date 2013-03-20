@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130320124640) do
+ActiveRecord::Schema.define(:version => 20130320144044) do
 
   create_table "encounters", :force => true do |t|
     t.string   "name"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20130320124640) do
     t.text     "tactics"
     t.text     "features"
     t.text     "conclusion"
+    t.boolean  "bypassed"
   end
 
   create_table "encounters_monsters", :force => true do |t|
@@ -56,6 +57,17 @@ ActiveRecord::Schema.define(:version => 20130320124640) do
     t.datetime "updated_at", :null => false
     t.string   "tier"
     t.string   "kind"
+  end
+
+  create_table "quests", :force => true do |t|
+    t.string   "name"
+    t.string   "kind"
+    t.text     "description"
+    t.integer  "level"
+    t.boolean  "completed"
+    t.boolean  "succeded"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "skill_challenges", :force => true do |t|

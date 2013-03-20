@@ -65,7 +65,7 @@ class EncountersController < ApplicationController
   def complete
     @encounter = Encounter.find(params[:id])
     already_completed = @encounter.completed
-    Hero.assign_experience params[:experience].to_i
+    Hero.assign_experience encounter.experience unless already_completed
 
     respond_to do |format|
       if !already_completed and @encounter.update_attribute(:completed, true)

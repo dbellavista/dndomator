@@ -10,7 +10,7 @@
   %fieldset
     - @treasure.quantity ||= 1
     - @treasure.quantity_assigned ||= 0
-    - @treasure.level ||= Hero.level_of(Hero.first.experience)
+    - @treasure.level ||= Hero.first.level
     - @treasure.packet ||= Treasure.next_packet(@treasure.level)
     %div.control-group
       = f.label :description, :class => "control-label"

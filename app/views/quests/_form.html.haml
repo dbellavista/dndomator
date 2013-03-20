@@ -1,0 +1,34 @@
+= form_for @quest, :html => {:class => "form-horizontal" } do |f|
+  - if @quest.errors.any?
+    #error_explanation
+      %div{:class => "alert alert-error"}
+        %h2= "#{pluralize(@quest.errors.count, "error")} prohibited this quest from being saved:"
+        %ul
+          - @quest.errors.full_messages.each do |msg|
+            %li= msg
+  - @quest.level ||= Hero.first.level
+
+  %fieldset
+    %div.control-group
+      = f.label :name, :class => "control-label"
+      %div.controls
+        = f.text_field :name, :class => "input-xlarge"
+    %div.control-group
+      = f.label :kind, :class => "control-label"
+      %div.controls
+        = f.select :kind, Quest.kinds.map{ |k| [k.capitalize, k] }
+    %div.control-group
+      = f.label :descriptioon, :class => "control-label"
+      %div.controls
+        = f.text_area :description, :class => "input-xlarge"
+    %div.control-group
+      = f.label :level, :class => "control-label"
+      %div.controls
+        = f.number_field :level
+    %label.radio
+      = f.check_box :completed
+      = "Completed"
+      = f.check_box :succeded
+      = "Succeded"
+    %div.form-actions
+      = f.submit 'Save', :class => "btn btn-primary"

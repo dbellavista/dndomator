@@ -2,7 +2,7 @@ class SkillChallengesController < ApplicationController
   # GET /skill_challenges
   # GET /skill_challenges.json
   def index
-    @skill_challenges = SkillChallenge.all
+    @skill_challenges = SkillChallenge.all(:order => "completed ASC, level DESC");
 
     respond_to do |format|
       format.html # index.html.erb
@@ -73,9 +73,12 @@ class SkillChallengesController < ApplicationController
 
   def success
     @skill_challenge = SkillChallenge.find(params[:id])
-    if !@skill_challenge.completed
+    unless @skill_challenge.completed
       @skill_challenge.progress_success += 1;
       check_completion @skill_challenge
+      if @skill_challenge.succeded
+        Hero.assign_experience @skill_challenge.experience
+      end
     end
     respond_to do |format|
       if @skill_challenge.save
@@ -120,10 +123,10 @@ class SkillChallengesController < ApplicationController
 
   private
   def check_completion skill_challenge
-    if SkillChallenge.number_of_failures(skill_challenge) == skill_challenge.progress_failure
+    if skill_challenge.number_of_failures == skill_challenge.progress_failure
       skill_challenge.completed = true
       skill_challenge.succeded = false
-    elsif SkillChallenge.number_of_success(skill_challenge) == skill_challenge.progress_success
+    elsif skill_challenge.number_of_success == skill_challenge.progress_success
       skill_challenge.completed = true
       skill_challenge.succeded = true
     else

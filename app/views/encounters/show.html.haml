@@ -22,13 +22,14 @@
   %h2
     = "#{@encounter.name} encounter (#{@encounter.experience} EXP)"
     - if @encounter.completed
-      = "- completed"
+      - if @encounter.bypassed
+        = "- bypassed"
+      - else
+        = "- completed"
     - else
       = "- progress"
   %div#encounter_commands{:class => "offset9 well", :style => "position: fixed"}
-    = form_tag complete_encounter_path(@encounter), :method => :put do
-      = hidden_field_tag :experience, "#{@encounter.experience}"
-      = submit_tag "Complete encounter!", :class => "btn btn-success"
+    = button_to "Complete encounter!", complete_encounter_path(@encounter), :method => :put, :class => "btn btn-success"
   %div#encounter_data{:class => "span5 well", :style => "height: 90%"}
     %ul{:class => "nav nav-list pre-scrollable", :style => ""}
       %li{:class => "nav-header", :id => "cmd-setup"} SETUP

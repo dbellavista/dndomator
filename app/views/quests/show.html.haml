@@ -1,0 +1,22 @@
+%div.page-header
+  %h2
+    = "#{@quest.name} (#{(@quest.completed) ? (@quest.succeded) ? "succeded" : "failed" : "progress"})"
+  %p="Level #{@quest.level} (#{@quest.experience} EXP)"
+
+%div{:class => "row-fluid"}
+  %div{:class => "span4 well"}
+    %ul
+      %li.nav-header DESCRIPTION
+      - @quest.description.split(/\n\W*\n/).each do |b|
+        %li= b
+  %div.span3.well
+    = button_to 'Complete', success_quest_path(@quest), :method => :put, :class => "btn btn-success"
+    = button_to 'Fail', failure_quest_path(@quest), :method => :put, :class => "btn btn-danger"
+
+%div{:class => "row-fluid"}
+  %div.span3
+    = button_to 'Edit', edit_quest_path(@quest), :method => :get, :class => "btn btn-primary"
+  %div.span3
+    = button_to 'Delete', quest_path(@quest), :method => :delete, :confirm => "Are you sure you want to delete the skill challenge #{@quest.name}?", :class => "btn btn-danger"
+  %div.span3
+    = button_to 'Back', quests_path, :method => :get, :class => "btn btn-primary"

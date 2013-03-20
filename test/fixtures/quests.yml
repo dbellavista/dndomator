@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  kind: MyString
+  description: MyText
+  level: 1
+  completed: false
+  succeded: false
+
+two:
+  name: MyString
+  kind: MyString
+  description: MyText
+  level: 1
+  completed: false
+  succeded: false

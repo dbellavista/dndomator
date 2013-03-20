@@ -1,15 +1,15 @@
 class SkillChallenge < ActiveRecord::Base
   attr_accessible :completed, :complexity, :context, :failure, :level, :name, :primary_skill, :secondary_skill, :succeded, :success, :progress_success, :progress_failure
 
-  def self.experience_of skill_challenge
-    return self.experience[skill_challenge.level - 1] * skill_challenge.complexity
+  def experience
+    return SkillChallenge.experience[self.level - 1] * self.complexity
   end
 
-  def self.number_of_success skill_challenge
-    return self.success[skill_challenge.complexity - 1]
+  def number_of_success
+    return SkillChallenge.success[self.complexity - 1]
   end
 
-  def self.number_of_failures skill_challenge
+  def number_of_failures
     return 3
   end
 

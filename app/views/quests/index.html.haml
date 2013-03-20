@@ -1,0 +1,19 @@
+%div.hero-unit
+  %h1 Quests
+
+= link_to 'New Quest', new_quest_path, :class => "btn btn-primary"
+
+%table{:class => "table table-striped table-bordered","data-provides" => "rowlink"}
+  %thead
+    %tr
+      %th Name
+      %th Kind
+      %th Level
+
+  %tbody
+  - @quests.each do |quest|
+    %tr{:class => (quest.completed) ? (quest.succeded) ? "success" : "error" : "progress"}
+      %td= link_to quest.name, quest
+      %td= quest.kind
+      %td= quest.level
+

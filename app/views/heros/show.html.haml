@@ -1,9 +1,8 @@
 %div.page-header
   %h2
-    - level = Hero.level_of @hero.experience
     = "#{@hero.name}"
   %p="Player: #{@hero.player}"
-  %p="Level #{level} (#{@hero.experience} / #{Hero.get_next_experience level})"
+  %p="Level #{@hero.level} (#{@hero.experience} / #{Hero.get_next_experience @hero.level})"
 
 %div{:class => "row-fluid well"}
   %div{:class => "span6"}

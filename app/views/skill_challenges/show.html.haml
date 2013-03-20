@@ -1,8 +1,8 @@
 %div.page-header
   %h2
     = "#{@skill_challenge.name} (#{(@skill_challenge.completed) ? (@skill_challenge.succeded) ? "succeded" : "failed" : "progress"})"
-  %p="Complexity: #{@skill_challenge.complexity} (#{SkillChallenge.number_of_success(@skill_challenge)} success before #{SkillChallenge.number_of_failures(@skill_challenge)} failure)"
-  %p="Level #{@skill_challenge.level} (#{SkillChallenge.experience_of(@skill_challenge)} EXP)"
+  %p="Complexity: #{@skill_challenge.complexity} (#{@skill_challenge.number_of_success} success before #{@skill_challenge.number_of_failures} failure)"
+  %p="Level #{@skill_challenge.level} #{@skill_challenge.experience} EXP)"
 
 %div{:class => "row-fluid well"}
   %div{:class => "span4"}

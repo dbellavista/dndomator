@@ -43,6 +43,8 @@
         %label.radio
           = f.check_box :completed
           = "Completed"
+          = f.check_box :bypassed
+          = "Bypassed"
         - Monster.kinds.each do |k|
           %ul{:class => "nav nav-list pre-scrollable"}
             %li{:class => "nav-header", :id => "cmd-setup"}= k.upcase

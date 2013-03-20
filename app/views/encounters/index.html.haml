@@ -9,7 +9,7 @@
       %th Experience
   %tbody
   - @encounters.each do |encounter|
-    %tr{:class => (encounter.completed) ? "success" : "progress"}
+    %tr{:class => (encounter.completed) ? (encounter.bypassed) ? "error" : "success" : "progress"}
       %td
         = link_to encounter.name, encounter
       %td

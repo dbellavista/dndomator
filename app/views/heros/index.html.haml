@@ -11,13 +11,12 @@
       %th #Items
   %tbody
     - @heros.each do |hero|
-      - level = Hero.level_of hero.experience
       %tr
         %td
           =link_to hero.name, hero
         %td= hero.player
-        %td= level
-        %td= "#{hero.experience} / #{Hero.get_next_experience level}"
+        %td= hero.level
+        %td= "#{hero.experience} / #{Hero.get_next_experience hero.level}"
         %td= "#{Hero.given_items(hero).count}/#{hero.treasures.count}"
 
 = link_to 'New Hero', new_hero_path, :class => "btn btn-primary btn-large"

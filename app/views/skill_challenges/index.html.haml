@@ -1,6 +1,8 @@
 %div.hero-unit
   %h1 Skill Challenges
 
+= link_to 'New Skill challenge', new_skill_challenge_path, :class => "btn btn-primary"
+
 %table{:class => "table table-striped table-bordered","data-provides" => "rowlink"}
   %thead
     %tr
@@ -17,4 +19,3 @@
       %td= skill_challenge.complexity
       %td= skill_challenge.level
 
-= link_to 'New Skill challenge', new_skill_challenge_path, :class => "btn btn-primary btn-large"
