@@ -10,12 +10,13 @@
   %h1
     = image_tag @achievement.image, :width => "300px"
     = "#{@achievement.name}"
-- unless @achievement.hero.nil?
   %div.page-header
-    %h3
-      = "Achieved by "
-      = link_to @achievement.hero.name, @achievement.hero
-    %div.well
-      %ul
-      - @achievement.instance.split(/\n\W*\n/).each do |b|
-        %li= b
+    %h4= "#{@achievement.description}"
+    - unless @achievement.hero.nil?
+      %h3
+        = "Achieved by "
+        = link_to @achievement.hero.name, @achievement.hero
+      %div.well
+        %ul
+        - @achievement.instance.split(/\n\W*\n/).each do |b|
+          %li= b
