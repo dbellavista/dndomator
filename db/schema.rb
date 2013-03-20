@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130320144044) do
+ActiveRecord::Schema.define(:version => 20130320170130) do
+
+  create_table "achievements", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.text     "instance"
+    t.integer  "hero_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "achievements", ["hero_id"], :name => "index_achievements_on_hero_id"
 
   create_table "encounters", :force => true do |t|
     t.string   "name"

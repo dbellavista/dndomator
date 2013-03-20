@@ -16,8 +16,8 @@
           =link_to hero.name, hero
         %td= hero.player
         %td= hero.level
-        %td= "#{hero.experience} / #{Hero.get_next_experience hero.level}"
-        %td= "#{Hero.given_items(hero).count}/#{hero.treasures.count}"
+        %td= "#{hero.experience} / #{hero.next_experience}"
+        %td= "#{hero.given_items.count}/#{hero.treasures.count}"
 
 = link_to 'New Hero', new_hero_path, :class => "btn btn-primary btn-large"
 

@@ -1,0 +1,21 @@
+%div{:class => "well"}
+  %div.span3
+    = button_to 'Edit', edit_achievement_path(@achievement), :method => :get, :class => "btn btn-primary "
+  %div.span3
+    = button_to 'Delete', @achievement, :method => :delete, :confirm => "Are you sure you want to delete achievement #{@achievement.name}?", :class => "btn btn-danger "
+  %div.span3
+    = button_to 'Back', achievements_path, :method => :get, :class => "btn btn-primary "
+
+%div.page-header.hero-unit
+  %h1
+    = "#{@achievement.name}"
+    = image_tag(@achievement.image)
+- unless @achievement.hero.nil?
+  %div.page-header
+    %h3
+      = "Achieved by "
+      = link_to @achievement.hero.name, @achievement.hero
+    %div.well
+      %ul
+      - @achievement.instance.split(/\n\W*\n/).each do |b|
+        %li= b

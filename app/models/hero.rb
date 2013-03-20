@@ -1,18 +1,20 @@
 class Hero < ActiveRecord::Base
-  has_many :treasures
-  attr_accessible :name, :player, :background, :experience, :treasures
 
-  def self.not_yet_given_items hero
+  has_many :treasures
+  has_many :achievements
+  attr_accessible :name, :player, :background, :experience
+
+  def not_yet_given_items
     items = []
-    treasures = Treasure.find_all_by_hero_id(hero.id) || []
+    treasures = Treasure.find_all_by_hero_id(self.id) || []
     treasures.each do |treasure|
       items << treasure.item unless Treasure.complete?(treasure)
     end
     return items
   end
-  def self.given_items hero
+  def given_items
     items = []
-    treasures = Treasure.find_all_by_hero_id(hero.id) || []
+    treasures = Treasure.find_all_by_hero_id(self.id) || []
     treasures.each do |treasure|
       items << treasure.item if Treasure.complete?(treasure)
     end
@@ -26,9 +28,9 @@ class Hero < ActiveRecord::Base
     return 30
   end
 
-  def self.get_next_experience level
-    return self.ex_points[29] if level > 29
-    return self.ex_points[level]
+  def next_experience
+    return Hero.ex_points[29] if self.level > 29
+    return Hero.ex_points[self.level]
   end
 
   def self.assign_experience experience

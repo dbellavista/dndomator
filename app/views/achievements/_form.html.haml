@@ -1,0 +1,29 @@
+= form_for @achievement, :html => {:class => "form-horizontal" } do |f|
+  - if @achievement.errors.any?
+    #error_explanation
+      %div{:class => "alert alert-error"}
+        %h2= "#{pluralize(@achievement.errors.count, "error")} prohibited this achievement from being saved:"
+        %ul
+          - @achievement.errors.full_messages.each do |msg|
+            %li= msg
+  - selected = @achievement.hero.id unless @achievement.hero.nil?
+  %fieldset
+    %div.control-group
+      = f.label :name, :class => "control-label"
+      %div.controls
+        = f.text_field :name, :class => "input-xlarge"
+    %div.control-group
+      = f.label :description, :class => "control-label"
+      %div.controls
+        = f.text_area :description, :class => "input-xlarge"
+    %div.control-group
+      = f.label :hero, :class => "control-label"
+      %div.controls
+        = f.select :hero, Hero.all.map {|x| [x.name, x.id]}, :include_blank => :true, :class => "input-xlarge", :selected => selected
+    %div.control-group
+      = f.label :instance, :class => "control-label"
+      %div.controls
+        = f.text_area :instance, :class => "input-xlarge"
+    %div.form-actions
+      = f.submit 'Save', :class => "btn btn-primary"
+

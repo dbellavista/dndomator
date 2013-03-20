@@ -1,0 +1,22 @@
+%div.hero-unit
+  %h1 Achievements
+
+%table{:class => "table table-striped table-bordered","data-provides" => "rowlink"}
+  %thead
+    %tr
+      %th
+      %th Name
+      %th Description
+      %th Hero
+      %th Instance
+  %tbody
+    - @achievements.each do |achievement|
+      %tr
+        %td= image_tag(achievement.image)
+        %td
+          =link_to achievement.name, achievement
+        %td= achievement.description
+        %td.nolink= link_to achievement.hero.name, achievement.hero
+        %td= achievement.instance
+
+= link_to 'New Achievement', new_achievement_path, :class => "btn btn-primary btn-large"

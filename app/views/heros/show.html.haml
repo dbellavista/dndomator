@@ -2,7 +2,7 @@
   %h2
     = "#{@hero.name}"
   %p="Player: #{@hero.player}"
-  %p="Level #{@hero.level} (#{@hero.experience} / #{Hero.get_next_experience @hero.level})"
+  %p="Level #{@hero.level} (#{@hero.experience} / #{@hero.next_experience})"
 
 %div{:class => "row-fluid well"}
   %div{:class => "span6"}
@@ -13,16 +13,16 @@
   %div{:class => "span3"}
     %ul{:class => "nav nav-list"}
       %li.nav-header OWNED ITEMS
-      - Hero.given_items(@hero).each do |item|
+      - @hero.given_items.each do |item|
         %li=link_to item.name, item
       %li.nav-header NOT YET GIVEN ITEMS
-      - Hero.not_yet_given_items(@hero).each do |item|
+      - @hero.not_yet_given_items.each do |item|
         %li=link_to item.name, item
 
 %div{:class => "row-fluid"}
   %div.span3
     = button_to 'Edit', edit_hero_path(@hero), :method => :get, :class => "btn btn-primary btn-large"
   %div.span3
-    = button_to 'Delete', heros_path, :method => :delete, :confirm => "Are you sure you want to delete hero #{@hero.name}?", :class => "btn btn-danger btn-large"
+    = button_to 'Delete', @hero, :method => :delete, :confirm => "Are you sure you want to delete hero #{@hero.name}?", :class => "btn btn-danger btn-large"
   %div.span3
     = button_to 'Back', heros_path, :method => :get, :class => "btn btn-primary btn-large"
