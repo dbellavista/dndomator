@@ -1,14 +1,17 @@
 %div.hero-unit
   %h1 Achievements
 
+%div.well
+  = link_to 'New Achievement', new_achievement_path, :class => "btn btn-primary"
+  = link_to 'Assign Achievement', new_achievement_instance_path, :class => "btn btn-primary"
+
 %table{:class => "table table-striped table-bordered","data-provides" => "rowlink"}
   %thead
     %tr
       %th
       %th Name
       %th Description
-      %th Hero
-      %th Instance
+      %th Heroes
   %tbody
     - @achievements.each do |achievement|
       %tr
@@ -16,7 +19,7 @@
         %td
           =link_to achievement.name, achievement
         %td= achievement.description
-        %td.nolink= link_to achievement.hero.name, achievement.hero unless achievement.hero.nil?
-        %td= achievement.instance
+        %td.nolink
+          - achievement.heros.each do |hero|
+            =link_to hero.name, hero
 
-= link_to 'New Achievement', new_achievement_path, :class => "btn btn-primary btn-large"

@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Hero:
+  = @achievement_instance.hero
+%p
+  %b Achievement:
+  = @achievement_instance.achievement
+%p
+  %b Description:
+  = @achievement_instance.description
+
+= link_to 'Edit', edit_achievement_instance_path(@achievement_instance)
+\|
+= link_to 'Back', achievement_instances_path

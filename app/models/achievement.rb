@@ -1,9 +1,9 @@
 class Achievement < ActiveRecord::Base
 
-  belongs_to :hero
-  attr_accessible :description, :instance, :name, :hero
+  has_many :achievement_instances, :order => 'created_at DESC'
+  has_many :heros, :through => :achievement_instances
+  attr_accessible :description, :name
 
-  validates :instance, :presence => {:message => "Instance is required if hero is present"}, :if => lambda { |o| !o.hero.nil? }
 
   def image
     return Achievement.relative_achievements_path + self.name.downcase + ".png"

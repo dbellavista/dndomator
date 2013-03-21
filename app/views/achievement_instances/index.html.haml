@@ -1,0 +1,23 @@
+%h1 Listing achievement_instances
+
+%table
+  %tr
+    %th Hero
+    %th Achievement
+    %th Description
+    %th
+    %th
+    %th
+
+  - @achievement_instances.each do |achievement_instance|
+    %tr
+      %td= achievement_instance.hero
+      %td= achievement_instance.achievement
+      %td= achievement_instance.description
+      %td= link_to 'Show', achievement_instance
+      %td= link_to 'Edit', edit_achievement_instance_path(achievement_instance)
+      %td= link_to 'Destroy', achievement_instance, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Achievement instance', new_achievement_instance_path

@@ -1,8 +1,8 @@
 Dndomator::Application.routes.draw do
+  resources :achievement_instances
+
 
   resources :achievements
-
-
   resources :quests do
     member do
       put 'success'

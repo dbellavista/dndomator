@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  hero: 
+  achievement: 
+  description: MyText
+
+two:
+  hero: 
+  achievement: 
+  description: MyText

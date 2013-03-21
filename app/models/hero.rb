@@ -1,7 +1,8 @@
 class Hero < ActiveRecord::Base
 
   has_many :treasures
-  has_many :achievements
+  has_many :achievement_instances
+  has_many :achievements, :through => :achievement_instances
   attr_accessible :name, :player, :background, :experience
 
   def not_yet_given_items

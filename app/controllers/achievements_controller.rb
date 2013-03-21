@@ -40,12 +40,6 @@ class AchievementsController < ApplicationController
   # POST /achievements
   # POST /achievements.json
   def create
-    if params[:achievement][:hero].empty?
-      params[:achievement][:hero] = nil
-    else
-      params[:achievement][:hero] = Hero.find(params[:achievement][:hero].to_i)
-    end
-
     @achievement = Achievement.new(params[:achievement])
 
     respond_to do |format|
@@ -64,11 +58,15 @@ class AchievementsController < ApplicationController
   def update
     @achievement = Achievement.find(params[:id])
 
-    if params[:achievement][:hero].empty?
-      params[:achievement][:hero] = nil
-    else
-      params[:achievement][:hero] = Hero.find(params[:achievement][:hero].to_i)
+    params[:instance_description].each do |instance, value|
+      achievement_instance = AchievementInstance.find(instance.to_i)
+      if params[:instance_delete].has_key? instance
+        achievement_instance.destroy
+      else
+        achievement_instance.update_attribute(:description, value)
+      end
     end
+
     respond_to do |format|
       if @achievement.update_attributes(params[:achievement])
         format.html { redirect_to @achievement, notice: 'Achievement was successfully updated.' }

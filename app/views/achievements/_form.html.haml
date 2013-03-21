@@ -6,7 +6,6 @@
         %ul
           - @achievement.errors.full_messages.each do |msg|
             %li= msg
-  - selected = @achievement.hero.id unless @achievement.hero.nil?
   %fieldset
     %div.control-group
       = f.label :name, :class => "control-label"
@@ -16,14 +15,16 @@
       = f.label :description, :class => "control-label"
       %div.controls
         = f.text_area :description, :class => "input-xlarge"
-    %div.control-group
-      = f.label :hero, :class => "control-label"
-      %div.controls
-        = f.select :hero, Hero.all.map {|x| [x.name, x.id]}, :include_blank => :true, :class => "input-xlarge", :selected => selected
-    %div.control-group
-      = f.label :instance, :class => "control-label"
-      %div.controls
-        = f.text_area :instance, :class => "input-xlarge"
+    -unless @achievement.achievement_instances.nil?
+      %hr
+      - @achievement.achievement_instances.each do |instance|
+        %div.control-group
+          %label.control-label= instance.hero.name
+          %div.controls
+            = text_area_tag "instance_description[#{instance.id}]", instance.description, :class => "input-xlarge"
+            Delete?
+            = check_box_tag "instance_delete[#{instance.id}]", "delete", checked = false
+
     %div.form-actions
       = f.submit 'Save', :class => "btn btn-primary"
 
