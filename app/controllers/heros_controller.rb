@@ -2,7 +2,7 @@ class HerosController < ApplicationController
   # GET /heros
   # GET /heros.json
   def index
-    @heros = Hero.all
+    @heros = Hero.all :order => "name"
 
     respond_to do |format|
       format.html # index.html.erb

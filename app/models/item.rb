@@ -11,7 +11,7 @@ class Item < ActiveRecord::Base
 
   def image
     return if self.name.nil? or self.level.nil?
-    return Item.relative_self_path + self.level.to_s + "_" + self.name + ".png"
+    return Item.relative_item_path + self.level.to_s + "_" + self.name + ".png"
   end
 
   def self.accepted_formats
