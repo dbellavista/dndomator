@@ -58,12 +58,14 @@ class AchievementsController < ApplicationController
   def update
     @achievement = Achievement.find(params[:id])
 
-    params[:instance_description].each do |instance, value|
-      achievement_instance = AchievementInstance.find(instance.to_i)
-      if params[:instance_delete].has_key? instance
-        achievement_instance.destroy
-      else
-        achievement_instance.update_attribute(:description, value)
+    unless params[:instance_description].nil?
+      params[:instance_description].each do |instance, value|
+        achievement_instance = AchievementInstance.find(instance.to_i)
+        if params[:instance_delete].has_key? instance
+          achievement_instance.destroy
+        else
+          achievement_instance.update_attribute(:description, value)
+        end
       end
     end
 
