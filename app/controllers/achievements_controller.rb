@@ -2,7 +2,7 @@ class AchievementsController < ApplicationController
   # GET /achievements
   # GET /achievements.json
   def index
-    @achievements = Achievement.all
+    @achievements = Achievement.all(:order => "name")
 
     respond_to do |format|
       format.html # index.html.erb
