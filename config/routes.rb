@@ -2,7 +2,11 @@ Dndomator::Application.routes.draw do
   resources :achievement_instances
 
 
-  resources :achievements
+  resources :achievements do
+    collection do
+      get 'list' => 'achievements#index', :list => true
+    end
+  end
   resources :quests do
     member do
       put 'success'

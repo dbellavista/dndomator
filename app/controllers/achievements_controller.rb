@@ -1,7 +1,9 @@
 class AchievementsController < ApplicationController
   # GET /achievements
   # GET /achievements.json
+
   def index
+    @list = params[:list] || false
     @achievements = Achievement.all(:order => "name")
 
     respond_to do |format|
