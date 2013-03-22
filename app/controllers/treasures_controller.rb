@@ -2,7 +2,7 @@ class TreasuresController < ApplicationController
   # GET /treasures
   # GET /treasures.json
   def index
-    @treasures = Treasure.find :all, :order => "level DESC, packet ASC"
+    @treasures = Treasure.all :order => "level DESC, packet ASC"
 
     respond_to do |format|
       format.html # index.html.erb

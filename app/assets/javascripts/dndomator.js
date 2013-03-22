@@ -8,9 +8,10 @@ function create_encounter_creation(target_exp) {
           return;
         }
         if($check.is(":checked")) {
-          $('img#img_' + id).show();
+          image = $('#imgmonster_' + id).val();
+          $('#imgmonster_container').append('<img src="'+image+'" id="img_'+id+'" />');
         } else {
-          $('img#img_' + id).hide();
+          $('img#img_' + id).remove();
         }
       }
 

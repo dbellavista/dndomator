@@ -5,6 +5,7 @@
   %thead
     %tr
       %th Name
+      %th Class and Race
       %th Player
       %th Level
       %th Experience
@@ -13,7 +14,8 @@
     - @heros.each do |hero|
       %tr
         %td
-          =link_to hero.name, hero
+          %b=link_to hero.name, hero
+        %td= "#{hero.hero_class} #{hero.race}"
         %td= hero.player
         %td= hero.level
         %td= "#{hero.experience} / #{hero.next_experience}"

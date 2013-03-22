@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130321175030) do
+ActiveRecord::Schema.define(:version => 20130322073005) do
 
   create_table "achievement_instances", :force => true do |t|
     t.integer  "hero_id"
@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(:version => 20130321175030) do
     t.datetime "updated_at", :null => false
     t.text     "background"
     t.integer  "experience"
+    t.string   "hero_class"
+    t.string   "race"
   end
 
   create_table "items", :force => true do |t|

@@ -57,9 +57,8 @@
                       = "#{monster.name} (#{monster.tier.capitalize} #{monster.level})"
                       = check_box_tag "incmonster[#{monster.id}]", true, @encounter.monsters.include?(monster), :class => "monster-check"
                       = hidden_field_tag "expmonster[#{monster.id}]", monster.experience
+                      = hidden_field_tag "imgmonster[#{monster.id}]", monster.image
                     - count = @encounter.monsters.count(:conditions => "monster_id = #{monster.id}")
                     - count = 1 if count == 0
                     = number_field_tag "nummonster[#{monster.id}]", count, :class => "input-mini span2 nummonster"
-      %div{:class => "span5", :id => "imgmonster"}
-        - Monster.find_each do |monster|
-          = image_tag(monster.image, :class => "img-rounded", :id => "img_#{monster.id}")
+      %div{:class => "span5", :id => "imgmonster_container"}
