@@ -11,9 +11,11 @@
       - @skill_challenge.context.split(/\n\W*\n/).each do |b|
         %li= b
       %li.nav-header SUCCESS
-      %li= @skill_challenge.success
+      - @skill_challenge.success.split(/\n\W*\n/).each do |b|
+        %li= b
       %li.nav-header FAILURE
-      %li= @skill_challenge.failure
+      - @skill_challenge.failure.split(/\n\W*\n/).each do |b|
+        %li= b
   %div{:class => "span4"}
     %ul
       %li.nav-header PRIMARY SKILLS
