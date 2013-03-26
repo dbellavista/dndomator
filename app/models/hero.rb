@@ -52,6 +52,11 @@ class Hero < ActiveRecord::Base
     return exp
   end
 
+  def exp_percentage
+    base_exp = Hero.ex_points[level - 1]
+    return (100 * (experience - base_exp)) / (next_experience - base_exp)
+  end
+
   private
     def self.ex_points
       [ 0, 1000, 2250, 3750, 5500, 7500, 10000, 13000, 16500, 20500, 26000,

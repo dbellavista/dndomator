@@ -24,7 +24,7 @@
         %td= "#{hero.hero_class} #{hero.race}"
         %td= hero.player
         %td= hero.level
-        %td= "#{hero.experience} / #{hero.next_experience}"
+        %td= "#{hero.experience} / #{hero.next_experience} [#{hero.exp_percentage}%]"
         %td= "#{hero.given_items.count}/#{hero.items.count}"
         - if @details
           %td= hero.passive_perception
