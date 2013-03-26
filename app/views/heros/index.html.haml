@@ -10,6 +10,12 @@
       %th Level
       %th Experience
       %th #Items
+      - if @details
+        %th PP
+        %th PI
+        %th F
+        %th R
+        %th W
   %tbody
     - @heros.each do |hero|
       %tr
@@ -19,9 +25,16 @@
         %td= hero.player
         %td= hero.level
         %td= "#{hero.experience} / #{hero.next_experience}"
-        %td= "#{hero.given_items.count}/#{hero.treasures.count}"
+        %td= "#{hero.given_items.count}/#{hero.items.count}"
+        - if @details
+          %td= hero.passive_perception
+          %td= hero.passive_insight
+          %td= hero.fortitude
+          %td= hero.reflex
+          %td= hero.will
 
 = link_to 'New Hero', new_hero_path, :class => "btn btn-primary btn-large"
+= link_to 'Details', details_heros_path, :class => "btn btn-primary btn-large"
 
 %div.hero-unit
   = form_tag assign_experience_heros_path, :method => :put, :class => "form-inline" do

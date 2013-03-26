@@ -2,7 +2,7 @@ class TreasuresController < ApplicationController
   # GET /treasures
   # GET /treasures.json
   def index
-    @treasures = Treasure.all :order => "level DESC, packet ASC"
+    @treasures = Treasure.all :order => "level DESC"
 
     respond_to do |format|
       format.html # index.html.erb
@@ -39,15 +39,30 @@ class TreasuresController < ApplicationController
 
   def give
     @treasure = Treasure.find(params[:id])
-    to_give = @treasure.quantity - @treasure.quantity_assigned
+    @component = @treasure.treasure_components.find(params[:cid])
+    to_give = @component.quantity - @component.quantity_assigned
+    unless @component.update_attribute(:quantity_assigned, to_give + @component.quantity_assigned)
+      raise ActiveRecord::Rollback, "Error #{@components.errors.to_s}"
+    end
+
     respond_to do |format|
-      if @treasure.update_attribute(:quantity_assigned, to_give + @treasure.quantity_assigned)
-        format.html { redirect_to @treasure, notice: 'Treasure was successfully assigned.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "show" }
-        format.json { render json: @treasure.errors, status: :unprocessable_entity }
+      format.html { redirect_to @treasure, notice: 'Treasure was successfully assigned.' }
+      format.json { render json: @treasure }
+    end
+  end
+
+  def giveall
+    @treasure = Treasure.find(params[:id])
+    @treasure.treasure_components.each do |component|
+      to_give = component.quantity - component.quantity_assigned
+      unless component.update_attribute(:quantity_assigned, to_give + component.quantity_assigned)
+        raise ActiveRecord::Rollback, "Error #{components.errors.to_s}"
       end
+    end
+
+    respond_to do |format|
+      format.html { redirect_to @treasure, notice: 'Treasure was successfully assigned.' }
+      format.json { render json: @treasure }
     end
   end
 
@@ -55,17 +70,16 @@ class TreasuresController < ApplicationController
   # POST /treasures.json
   def create
 
-    params[:treasure][:item] = Item.find(params[:treasure][:item])
-    if !params[:treasure][:hero].empty?
-      params[:treasure][:hero] = Hero.find(params[:treasure][:hero])
-    else
-      params[:treasure][:hero] = nil
+    @treasure = Treasure.new(params[:treasure])
+    components = create_components @treasure
+    @treasure.save!
+    components.each do |component|
+      record = TreasureComponent.new(component)
+      raise ActiveRecord::Rollback, "Error #{record.errors.to_s}" unless record.save
     end
 
-    @treasure = Treasure.new(params[:treasure])
-
     respond_to do |format|
-      if @treasure.save
+      if true
         format.html { redirect_to @treasure, notice: 'Treasure was successfully created.' }
         format.json { render json: @treasure, status: :created, location: @treasure }
       else
@@ -78,12 +92,14 @@ class TreasuresController < ApplicationController
   # PUT /treasures/1
   # PUT /treasures/1.json
   def update
-    params[:treasure][:item] = Item.find(params[:treasure][:item])
     @treasure = Treasure.find(params[:id])
-    if !params[:treasure][:hero].empty?
-      params[:treasure][:hero] = Hero.find(params[:treasure][:hero])
-    else
-      params[:treasure][:hero] = nil
+
+    components = create_components @treasure
+    @treasure.save!
+    TreasureComponent.where(:treasure_id => @treasure.id).delete_all
+    components.each do |component|
+      record = TreasureComponent.new(component)
+      raise ActiveRecord::Rollback, "Error #{record.errors.to_s}" unless record.save
     end
 
     respond_to do |format|
@@ -95,6 +111,22 @@ class TreasuresController < ApplicationController
         format.json { render json: @treasure.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def create_components treasure
+    components = []
+    params[:component][:ids].each do |item, value|
+      component = {}
+      next unless value == "true"
+      component[:treasure] = treasure
+      component[:item] = Item.find(item)
+      component[:quantity] = params[:component]['quantity'][item]
+      component[:description] = params[:component]['description'][item]
+      component[:quantity_assigned] = params[:component]['quantity_assigned'][item]
+      component[:hero] = params[:component]['hero'][item] == "" ? nil : Hero.find(params[:component]['hero'][item])
+      components << component
+    end
+    return components
   end
 
   # DELETE /treasures/1

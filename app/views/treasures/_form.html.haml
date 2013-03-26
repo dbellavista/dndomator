@@ -24,9 +24,27 @@
       = f.label :packet, :class => "control-label"
       %div.controls
         = f.number_field :packet
-    %div.control-group
-      %div.controls
-        = f.select :item, Item.all(:order => "level DESC").map {|i| ["#{i.name}, #{i.level}", i.id]}, :selected => @treasure.item_id
+
+    %ul{:class => "nav nav-list"}
+      %li{:class => "nav-header", :id => "cmd-setup"} ITEMS
+      %div{:id => "items" }
+        - Item.all(:order => "level DESC, name").each do |item|
+          %li
+            %div{:class => "controls-row"}
+              %label{:class => "span5"}
+                = "#{item.name} (#{item.level})"
+                = check_box_tag "component[ids][#{item.id}]", true, @treasure.items.include?(item), :class => "item-check"
+              - rel = @treasure.treasure_components.where(:item_id => item.id)
+              - component = rel.empty? ? nil : rel.first
+              - quantity = component.nil? ? 1 : component.quantity
+              - quantity_assigned = component.nil? ? 0 : component.quantity_assigned
+              - hero_id = (component.nil? or component.hero.nil?) ? -1 : component.hero.id
+              - description = component.nil? ? "" : component.description
+              = number_field_tag "component[quantity][#{item.id}]", quantity, :class => "input-mini span2"
+              = number_field_tag "component[quantity_assigned][#{item.id}]", quantity_assigned, :class => "input-mini span2"
+              = text_field_tag "component[description][#{item.id}]", description, :class => "input-mini span2"
+              = select_tag "component[hero][#{item.id}]", options_from_collection_for_select(Hero.all, 'id', 'name', hero_id), :include_blank => true
+
     %div.control-group
       = f.label :quantity, :class => "control-label"
       %div.controls
@@ -35,8 +53,5 @@
       = f.label :quantity_assigned, :class => "control-label"
       %div.controls
         = f.number_field :quantity_assigned
-    %div.control-group
-      %div.controls
-        = f.select :hero, Hero.all.map {|h| [h.name, h.id]}, :include_blank => true, :selected => @treasure.hero_id
     %div.form-actions
       = f.submit 'Save', :class => "btn btn-primary"

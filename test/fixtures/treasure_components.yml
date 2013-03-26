@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  treasure: 
+  item: 
+  quantity: 1
+  quantity_assigned: 1
+
+two:
+  treasure: 
+  item: 
+  quantity: 1
+  quantity_assigned: 1

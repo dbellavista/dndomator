@@ -2,6 +2,7 @@ class HerosController < ApplicationController
   # GET /heros
   # GET /heros.json
   def index
+    @details = params[:details] || true
     @heros = Hero.all :order => "name"
 
     respond_to do |format|

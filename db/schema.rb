@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130322073005) do
+ActiveRecord::Schema.define(:version => 20130326145412) do
 
   create_table "achievement_instances", :force => true do |t|
     t.integer  "hero_id"
@@ -63,6 +63,11 @@ ActiveRecord::Schema.define(:version => 20130322073005) do
     t.integer  "experience"
     t.string   "hero_class"
     t.string   "race"
+    t.integer  "perception"
+    t.integer  "insight"
+    t.integer  "fortitude"
+    t.integer  "reflex"
+    t.integer  "will"
   end
 
   create_table "items", :force => true do |t|
@@ -71,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20130322073005) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "value"
+    t.integer  "hero_id"
   end
 
   create_table "monsters", :force => true do |t|
@@ -110,15 +116,26 @@ ActiveRecord::Schema.define(:version => 20130322073005) do
     t.integer  "progress_failure"
   end
 
+  create_table "treasure_components", :force => true do |t|
+    t.integer  "treasure_id"
+    t.integer  "item_id"
+    t.integer  "quantity"
+    t.integer  "quantity_assigned"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "hero_id"
+    t.text     "description"
+  end
+
+  add_index "treasure_components", ["item_id"], :name => "index_treasure_components_on_item_id"
+  add_index "treasure_components", ["treasure_id"], :name => "index_treasure_components_on_treasure_id"
+
   create_table "treasures", :force => true do |t|
     t.text     "description"
     t.integer  "level"
-    t.integer  "quantity"
-    t.integer  "quantity_assigned"
     t.integer  "item_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-    t.integer  "packet"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.integer  "hero_id"
   end
 

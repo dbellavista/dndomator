@@ -24,7 +24,8 @@ Dndomator::Application.routes.draw do
 
   resources :treasures do
     member do
-      put 'give'
+      match 'assign/:cid' => 'treasures#give', :as => :give, :method => :put
+      put 'giveall'
     end
   end
 
@@ -51,6 +52,7 @@ Dndomator::Application.routes.draw do
   resources :heros do
     collection do
       put 'assign_experience'
+      get 'details' => 'heros#index', :details => true
     end
   end
 

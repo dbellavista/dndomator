@@ -2,26 +2,34 @@
   %h2
     = @treasure.description
 
-%div{:class => "hero-unit"}
-  %dl{:class => "dl-horizontal"}
-    %dt Item:
-    %dd=link_to "#{@treasure.item.name} (#{@treasure.item.level})", item_path(@treasure.item)
-    %dt Quantity given:
-    %dd="#{@treasure.quantity_assigned}/#{@treasure.quantity}"
-    %dt Level-Packet:
-    %dd="#{@treasure.level}-#{@treasure.packet}"
-    %dt Assigned Hero:
-    %dd
-      - if !@treasure.hero.nil?
-        =link_to @treasure.hero.name, @treasure.hero
+
+%table{:class => "table table-striped table-bordered","data-provides" => "rowlink"}
+  %thead
+    %tr
+      %th Description
+      %th Item
+      %th Quantity
+      %th Heros
+      %th Action
+  %tbody
+  - @treasure.treasure_components.each do |component|
+    %tr{:class => component.complete? ? "success" : ""}
+      %td= component.description
+      %td= link_to "#{component.item.name} (#{component.item.level})", item_path(component.item)
+      %td="#{component.quantity_assigned}/#{component.quantity}"
+      %td.nolink
+        - if !component.hero.nil?
+          =link_to component.hero.name, component.hero
+      %td.nolink= link_to "Assign treasure", give_treasure_path(@treasure, component.id), :method => :put, :class => "btn btn-success"
+
 
 %div{:class => "row-fluid"}
   %div.span2
-    = button_to 'Assign', give_treasure_path(@treasure), :method => :put, :class => "btn btn-primary btn-large"
+    = button_to 'Assign All', giveall_treasure_path(@treasure), :method => :put, :class => "btn btn-success btn-large"
   %div.span2
     = button_to 'Edit', edit_treasure_path(@treasure), :method => :get, :class => "btn btn-primary btn-large"
   %div.span2
-    = button_to 'Delete', treasures_path, :method => :delete, :confirm => "Are you sure you want to delete this treasure?", :class => "btn btn-danger btn-large"
+    = button_to 'Delete', @treasure, :method => :delete, :confirm => "Are you sure you want to delete this treasure?", :class => "btn btn-danger btn-large"
   %div.span2
     = button_to 'Back', treasures_path, :method => :get, :class => "btn btn-primary btn-large"
   %div.span2

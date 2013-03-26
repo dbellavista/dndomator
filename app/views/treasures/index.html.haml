@@ -5,24 +5,20 @@
   %thead
     %tr
       %th Description
-      %th Level.Packet
-      %th Quantity
-      %th Quantity assigned
-      %th Item
-      %th Hero
+      %th Level
+      %th Items
       %th Action
   %tbody
     - @treasures.each do |treasure|
-      %tr{:class => (Treasure.complete? treasure) ? "success" : ""}
+      %tr{:class => (treasure.complete?) ? "success" : ""}
         %td= link_to treasure.description, treasure
-        %td= "#{treasure.level}.#{treasure.packet}"
-        %td= treasure.quantity
-        %td= treasure.quantity_assigned
-        %td= link_to treasure.item.name, treasure.item, :class => "nolink"
-        %td
-          - if !treasure.hero.nil?
-            = link_to treasure.hero.name, treasure.hero, :class => "nolink"
-        %td= link_to "Give treasure", give_treasure_path(treasure), :class => "btn btn-primary nolink", :method => :put
+        %td= treasure.level
+        %td.nolink
+          - treasure.treasure_components.each do |c|
+            - quantity = c.quantity > 1 ? "#{c.quantity} " : ""
+            = link_to "[#{quantity}#{c.item.name}]", c.item
+
+        %td= link_to "Give treasure", giveall_treasure_path(treasure), :class => "btn btn-primary nolink", :method => :put
 
 %br
 

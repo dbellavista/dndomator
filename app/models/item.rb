@@ -1,4 +1,7 @@
 class Item < ActiveRecord::Base
+
+  has_many :treasure_components
+  has_many :heros, :through => :treasure_components
   attr_accessible :level, :name, :value
 
   def self.relative_item_path
