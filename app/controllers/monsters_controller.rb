@@ -3,7 +3,7 @@ class MonstersController < ApplicationController
   # GET /monsters.json
   def index
     Monster.kinds.each do |k|
-      instance_variable_set("@#{k.pluralize}", Monster.find_all_by_kind(k, :order => "level DESC"));
+      instance_variable_set("@#{k.pluralize}", Monster.find_all_by_kind(k, :order => "level DESC, tier ASC, name ASC"));
     end
 
     respond_to do |format|
