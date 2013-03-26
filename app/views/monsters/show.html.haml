@@ -2,7 +2,7 @@
   %div.span3
     = button_to 'Edit', edit_monster_path(@monster), :method => :get, :class => "btn btn-primary "
   %div.span3
-    = button_to 'Delete', monsters_path, :method => :delete, :confirm => "Are you sure you want to delete monster #{@monster.name}?", :class => "btn btn-danger "
+    = button_to 'Delete', @monsters, :method => :delete, :confirm => "Are you sure you want to delete monster #{@monster.name}?", :class => "btn btn-danger "
   %div.span3
     = button_to 'Back', monsters_path, :method => :get, :class => "btn btn-primary "
 
