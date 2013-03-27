@@ -62,7 +62,7 @@ function create_fighter(data, className) {
         <span id="dying" class="text-error">D</span>\
         <span id="death" class="muted">DT</span>\
         <input type="hidden" id="maxhp" value = "0" />\
-        <input type="text" id="hp" class="input-mini" value = "0" />\
+        <input type="text" id="hp" class="input-mini hp" value = "0" />\
         \
       </dt>\
       <dd id="chars">\
@@ -74,7 +74,7 @@ function create_fighter(data, className) {
           <label for="attackroll">AR:</label>\
           <input type="text" id="attackroll" class="input-mini" />\
           <label for="damage">D:</label>\
-          <input type="text" id="damage" class="input-mini" />\
+          <input type="text" id="damage" class="input-mini damage" />\
           <textarea rows=3 id="notes" style="vertical-align: top;"></textarea>\
         </form>\
       </dd>\
@@ -235,7 +235,7 @@ function encounter() {
 
 	}
 
-	$("#hp").keypress(function(e) {
+	$(".hp").keypress(function(e) {
 		code= (e.keyCode ? e.keyCode : e.which);
 		if(code != 13) {
 			return;
@@ -251,7 +251,7 @@ function encounter() {
 
 	});
 
-	$("#damage").keypress(function(e) {
+	$(".damage").keypress(function(e) {
 		code= (e.keyCode ? e.keyCode : e.which);
 		if(code != 13) {
 			return;
