@@ -63,7 +63,7 @@ class QuestsController < ApplicationController
     end
     respond_to do |format|
       if @quest.save
-        format.html { redirect_to @quest, notice: 'Success annotated!' }
+        format.html { redirect_to @quest, notice: 'Quest completed!' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

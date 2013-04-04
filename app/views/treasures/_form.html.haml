@@ -24,6 +24,7 @@
       %li{:class => "nav-header", :id => "cmd-setup"} ITEMS
       %div{:id => "items" }
         - Item.all(:order => "level DESC, name").each do |item|
+          - next unless @new and (item.level == 0 or TreasureComponent.where(:item_id => item.id).empty?)
           %li
             %div{:class => "controls-row"}
               %label{:class => "span5"}

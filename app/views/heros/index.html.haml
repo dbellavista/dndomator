@@ -1,4 +1,4 @@
-%div.hero-unit
+%div.page-header
   %h1 Heroes
 
 %table{:class => "table table-striped table-bordered","data-provides" => "rowlink"}
@@ -33,11 +33,13 @@
           %td= hero.reflex
           %td= hero.will
 
-= link_to 'New Hero', new_hero_path, :class => "btn btn-primary btn-large"
-= link_to 'Details', details_heros_path, :class => "btn btn-primary btn-large"
 
-%div.hero-unit
-  = form_tag assign_experience_heros_path, :method => :put, :class => "form-inline" do
-    = number_field_tag :experience, 0
-    = submit_tag "Assign experience points", :class => "btn btn-success"
+%div.row-fluid
+  %div.well.span4
+    = link_to 'New Hero', new_hero_path, :class => "btn btn-primary"
+    = link_to 'Details', details_heros_path, :class => "btn btn-primary"
+  %div.well.span8
+    = form_tag assign_experience_heros_path, :method => :put, :class => "form-inline" do
+      = number_field_tag :experience, 0
+      = submit_tag "Assign experience points", :class => "btn btn-success"
 

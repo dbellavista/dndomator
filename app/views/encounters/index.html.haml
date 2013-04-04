@@ -1,5 +1,7 @@
-%div.hero-unit
+%div.page-header
   %h1 Encounters
+
+= link_to 'New Encounter', new_encounter_path, :class => "btn btn-primary"
 
 %table{:class => "table table-striped table-bordered","data-provides" => "rowlink"}
   %thead
@@ -17,4 +19,3 @@
           = "#{encounter.monsters.all.count(monster)} #{monster.name} (Level #{monster.level}) "
       %td= "Level #{encounter.target_level Hero.count()}, Exp: #{encounter.experience}"
 
-= link_to 'New Encounter', new_encounter_path, :class => "btn btn-primary btn-large"
