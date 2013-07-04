@@ -9,7 +9,7 @@ class Quest < ActiveRecord::Base
   end
 
   def experience
-    Quest.experience[self.level - 1] * ((self.major?) ? Hero.count : 1);
+    Quest.experience[self.level - 1] * ((self.major?) ? Hero.heros().length : 1);
   end
 
   attr_accessible :completed, :description, :kind, :level, :name, :succeded

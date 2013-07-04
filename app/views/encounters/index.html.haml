@@ -17,5 +17,5 @@
       %td
         - encounter.monsters.all.uniq.each do |monster|
           = "#{encounter.monsters.all.count(monster)} #{monster.name} (Level #{monster.level}) "
-      %td= "Level #{encounter.target_level Hero.count()}, Exp: #{encounter.experience}"
+      %td= "Level #{encounter.target_level Hero.heros.length}, Exp: #{encounter.experience}"
 

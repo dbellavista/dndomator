@@ -1,7 +1,7 @@
 %script
   :plain
     $(function() {
-  ="var target = #{Encounter.exp.map { |e|  e * Hero.count()} };"
+  ="var target = #{Encounter.exp.map { |e|  e * Hero.heros().length} };"
   = raw "var kinds = #{Monster.kinds.map {|k| "##{k}"}};"
   :plain
     create_encounter_creation(target);
