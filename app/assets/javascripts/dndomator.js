@@ -111,8 +111,10 @@ function initEncounter(encounter_path, heroes_path) {
     // Heroes
     $.getJSON(heroes_path, function(data) {
       $.each(data, function(key, val) {
-        var html = create_fighter(val, 'hero');
-        $("#encounter").append(html);
+        if(val['active']) {
+          var html = create_fighter(val, 'hero');
+          $("#encounter").append(html);
+        }
       });
       // Start encounter
       encounter();

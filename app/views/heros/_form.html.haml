@@ -12,6 +12,10 @@
       %div.controls
         = f.text_field :name, :class => "input-xlarge"
     %div.control-group
+      = f.label :active, :class => "control-label"
+      %div.controls
+        = f.check_box :active, :class => "input-xlarge"
+    %div.control-group
       = f.label :insight, :class => "control-label"
       %div.controls
         = f.number_field :insight, :class => "input-xlarge"

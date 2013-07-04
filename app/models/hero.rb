@@ -4,7 +4,7 @@ class Hero < ActiveRecord::Base
   has_many :items, :through => :treasure_components
   has_many :achievement_instances
   has_many :achievements, :through => :achievement_instances
-  attr_accessible :name, :player, :background, :experience, :hero_class, :race, :perception, :insight, :fortitude, :will, :reflex
+  attr_accessible :name, :player, :background, :experience, :hero_class, :race, :perception, :insight, :fortitude, :will, :reflex, :active
 
   def passive_insight
     self.perception + 10
@@ -42,8 +42,12 @@ class Hero < ActiveRecord::Base
     return Hero.ex_points[self.level]
   end
 
+  def self.heros
+    return Hero.find_all_by_active(true)
+  end
+
   def self.assign_experience experience
-    heros = Hero.all();
+    heros = Hero.heros
     exp = experience / heros.length;
 
     heros.each do |hero|

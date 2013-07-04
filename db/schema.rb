@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130326145412) do
+ActiveRecord::Schema.define(:version => 20130704063717) do
 
   create_table "achievement_instances", :force => true do |t|
     t.integer  "hero_id"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20130326145412) do
     t.integer  "fortitude"
     t.integer  "reflex"
     t.integer  "will"
+    t.boolean  "active"
   end
 
   create_table "items", :force => true do |t|

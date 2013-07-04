@@ -3,6 +3,8 @@
     = "#{@hero.name}, #{@hero.hero_class} #{@hero.race}"
   %p="Player: #{@hero.player}"
   %p="Level #{@hero.level} (#{@hero.experience} / #{@hero.next_experience})"
+  - if !@hero.active
+    %p="UNACTIVE"
 
 %div{:class => "row-fluid well"}
   %div{:class => "span6"}
