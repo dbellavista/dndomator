@@ -25,7 +25,8 @@ class TreasuresController < ApplicationController
   # GET /treasures/new.json
   def new
     @treasure = Treasure.new
-
+		@new = true
+		@edit = false
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @treasure }
@@ -34,6 +35,8 @@ class TreasuresController < ApplicationController
 
   # GET /treasures/1/edit
   def edit
+		@new = false
+		@edit = true
     @treasure = Treasure.find(params[:id])
   end
 
